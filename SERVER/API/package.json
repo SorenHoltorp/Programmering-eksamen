@@ -1,0 +1,20 @@
+{
+  "name": "Programmering-eksamen",
+  "version": "1.0.0",
+  "description": "Dette MVP er udarbejdet af Christian R, William O, Christian B & Søren H.",
+  "main": "soren.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SorenHoltorp/Programmering-eksamen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SorenHoltorp/Programmering-eksamen/issues"
+  },
+  "homepage": "https://github.com/SorenHoltorp/Programmering-eksamen#readme"
+}
