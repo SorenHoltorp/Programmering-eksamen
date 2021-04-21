@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Main page</title>
+    <style>
+        body{
+            background-color: pink;
+
+        }
+.pb {
+width: 200px;
+height: 200px;
+}
+        
+    </style>
+    
+    </head>
+    <body>
+        <h1 id="velkomst"> Velkommen til din GIT-LAID profil</h1>
+
+<img src="../img/profil.png" id="profilebillede" class="pb">  <br> <br>
+
+<!-- lav div tags så man kan slette, update osv bruger-->
+<div id=userinterface>
+
+    <label for="name"><br><b>Brugernavn</label><br> 
+    <label id="userName" for="name"><b>Tomt navn - Ikke logget ind</label><br> <br>
+
+
+    <label for="name"><b>Køn</label> <br>
+    <label id="gender" for="name"><b>Tomt køn</label><br> <br>
+
+    <label for="name"><b>Email</label><br>
+    <label id="email" for="name"><b>Tom string</label><br> <br>
+
+    <label for="name"><b>Alder</label><br>
+    <label id="user_birthday" for="name"><b>Tom alder</label><br> <br>
+
+<!--Til fremtidigt udvikling med bio-->
+    <!-- <label for="name"><b>Beskrivelse</label><br>
+    <textarea id="bio" type="text" rows="5" cols="40" placeholder="Jeg er supermand"></textarea>
+    <br/> -->
+
+    <button id="sletbtn" type="button" class="deletebtn">Slet bruger</button>
+    <button id="editbtn" type="button" class="editbtn">Opdater bruger</button>
+    <button id="logout" type="button" class="logout">Tilbage til login</button>
+
+    <button id="matchside" type="button" class="matchside">Jeg vil matche</button>
+
+
+</div>
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> !-->
+        <script src="mainpage.js"></script>
+    </body>
+</html>

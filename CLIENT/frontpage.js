@@ -4,15 +4,16 @@ const button = document.getElementById("login")
 
 
 
-    function loginknap() {
+  /*  function loginknap() {
         axios.post("http://localhost:9000/user/login", {
-            userName: userName.value, password: psw.value})
+            userName: userName.value, password: psw.value}) 
         .then(response => {
             console.log(response)
             localStorage.setItem('activeUser', JSON.stringify(response.data))
             window.location.href = 'mainpage.html';
         })
     }
+*/
 
     document.getElementById("create").onclick = function(){
       location.href = "signup.html";
