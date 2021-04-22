@@ -24,7 +24,7 @@ module.exports.startDb = startDb
 
 function insert(payload){
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO [users].[users] (name, email, gender, country, birthdate) VALUES (@name, @email, @gender, @country, @birthdate)`
+        const sql = `INSERT INTO [datingapplication].[tbl_users] (name, email, gender, country, birthdate) VALUES (@name, @email, @gender, @country, @birthdate)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -49,7 +49,7 @@ module.exports.insert = insert
 
 function select(name) {
     return new Promise((resolve, reject) => {
-         const sql = 'SELECT * FROM [datingapplication].[Users] where name = @name'
+         const sql = 'SELECT * FROM [datingapplication].[tbl_users] where name = @name'
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
