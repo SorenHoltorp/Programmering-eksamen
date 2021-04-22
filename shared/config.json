@@ -1,0 +1,14 @@
+{  
+    "server": "datingappnuserver.database.windows.net", 
+    "authentication": {
+        "type": "default",
+        "options": {
+            "userName": "Christian", 
+            "password": "Qyu78cfg1305" 
+        }
+    },
+    "options": {
+        "encrypt": true,
+        "database": "dating"
+    }
+} 
