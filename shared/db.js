@@ -23,7 +23,7 @@ function startDb(){
 module.exports.sqlConnection = connection
 module.exports.startDb = startDb
 
-
+// Opretter bruger i systemet
 function insert(payload){
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
@@ -46,10 +46,10 @@ function insert(payload){
 
     });
 
-
 }
 module.exports.insert = insert
 
+/*
 function select(username) {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT * FROM [datingapplication].[tbl_users] where username = @username'
@@ -69,3 +69,29 @@ function select(username) {
     })
 }
 module.exports.select = select
+*/
+
+function select(username) {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT username FROM datingapplication].[tbl_users] WHERE username = @username'
+        const request = new Request(sql, (err, rowcount) => {
+            if (err){
+                reject(err)
+                console.log(err)
+            } else if (rowcount == 0){
+                reject({message: 'User does not exits'})
+            }
+        });
+        request.addParameter('username', TYPES.VarChar, username)
+        request.on('row', (coloms) => {
+            resolve(colums)
+        });
+        connection.execSql(request)
+    })
+}
+
+
+
+
+module.exports.select = select
+
