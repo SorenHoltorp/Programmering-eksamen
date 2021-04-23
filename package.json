@@ -2,6 +2,7 @@
   "name": "programmering-eksamen",
   "version": "1.0.0",
   "description": "",
+  "main": "app.js",
   "scripts": {
     "start": "func start",
     "test": "echo \"No tests yet...\""
