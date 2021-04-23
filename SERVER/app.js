@@ -3,13 +3,6 @@ const app = express();
 const port = 7071; 
 const cors = require ('cors');
 const bodyParser = require ("body-parser")
-const port = 7071;
-const cors = require('cors');
-const bodyparser = require('bodyparser');
-
-// BODY-PARSER
-app.use(bodyparser.urlencoded({ extended: true}));
-app.use(bodyparser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -35,10 +28,7 @@ app.use("/signup", signupRoute);
 app.use("/", loginRoute )
 */
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 97475a770e3da761c00bc1db5f557c561a72a46d
 app.listen(port, () => {
     console.log(`Server-applikation lytter på http://localhost:${port}`)
 });
