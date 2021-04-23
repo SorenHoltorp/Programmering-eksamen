@@ -11,7 +11,7 @@ function registerController(req, res) {
 
         // Roseneagle gør noget fedt her. newUser skal sendes til databasen, og vi skal have et respons fra databasen om, at alt er fjong
         let succes = "It worked!";
-        res.send(succes)
+        res.json(succes)
     } 
     catch(err){
         let failed = "It failed"; 
@@ -20,4 +20,4 @@ function registerController(req, res) {
     }
 
 }
-module.exports = registerController();
+module.exports = registerController;
