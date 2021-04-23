@@ -24,18 +24,17 @@ module.exports.startDb = startDb
 
 function insert(payload){
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_users] (name, email, gender, country, birthdate) VALUES (@name, @email, @gender, @country, @birthdate)`
+        const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
                 console.log(err)
             }
         });
-        request.addParameter('name', TYPES.VarChar, payload.name)
+        request.addParameter('username', TYPES.VarChar, payload.username)
         request.addParameter('email', TYPES.VarChar, payload.email)
-        request.addParameter('gender', TYPES.VarChar, payload.gender)
-        request.addParameter('country', TYPES.VarChar, payload.country)
-        request.addParameter('birthdate', TYPES.Date, payload.birthdate)
+        request.addParameter('password', TYPES.VarChar, payload.password)
+        
 
         request.on('requestCompleted', (row) => {
             console.log('User inserted', row);
@@ -47,9 +46,9 @@ function insert(payload){
 }
 module.exports.insert = insert
 
-function select(name) {
+function select(username) {
     return new Promise((resolve, reject) => {
-         const sql = 'SELECT * FROM [datingapplication].[tbl_users] where name = @name'
+         const sql = 'SELECT * FROM [datingapplication].[tbl_users] where username = @username'
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -58,7 +57,7 @@ function select(name) {
                 reject({message: 'User does not exits'})
             }
         });
-        request.addParameter('name', TYPES.VarChar, name)
+        request.addParameter('username', TYPES.VarChar, username)
         request.on('row', (coloms) => {
             resolve(colums)
         });
