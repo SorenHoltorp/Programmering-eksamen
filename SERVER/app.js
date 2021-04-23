@@ -3,6 +3,7 @@ const app = express();
 const port = 9000; 
 const cors = require ('cors');
 
+
 /* - Kommer til at være noget vi skal bruge
 const signupRoute = require ("./controller/signupAPI")
 const loginRoute = require ("./controller/loginAPI")
@@ -15,6 +16,8 @@ app.get("/",(req,res)=>{
     res.send("<h1>Gitlaid homepage</h1>")
 });
 
+// REGISTER CONTROLLER + POST
+const registerController = require ('./API/Controllers/LoginController/registerController');
 app.post("/register", registerController);
 
 /* -Kommer til at være noget vi skal bruge
