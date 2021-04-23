@@ -11,6 +11,8 @@ app.get("/",(req,res)=>{
     res.send("<h1>Gitlaid homepage</h1>")
 });
 
+app.post("/register", registerController);
+
 /* -Kommer til at være noget vi skal bruge
 app.use("/signup", signupRoute);
 app.use("/", loginRoute )
