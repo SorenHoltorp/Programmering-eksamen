@@ -1,5 +1,7 @@
 const { Connection, Request, TYPES} = require('tedious');
 const config = require('./config.json');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
 
