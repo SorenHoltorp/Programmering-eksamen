@@ -20,7 +20,7 @@ function register() {
         },
         body: JSON.stringify(registerData)
     }).then(res => res.json()).then(data => {
-        console.log(res)
+        console.log(data)
         alert("Welcome to GIT-LAID")
     }).catch((err) => {
         console.err("Error:", err)
