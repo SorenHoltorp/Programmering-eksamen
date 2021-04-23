@@ -2,9 +2,9 @@
 function register() {
 
     // Henter HTML data
-    let nameRegister = document.getElementById('');
-    let emailRegister = document.getElementById('');
-    let passwordRegister = document.getElementById('');
+    let nameRegister = document.getElementById('username');
+    let emailRegister = document.getElementById('email');
+    let passwordRegister = document.getElementById('password');
 
 
     let registerData = {
