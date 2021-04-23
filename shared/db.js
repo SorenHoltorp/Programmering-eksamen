@@ -52,7 +52,7 @@ module.exports.insert = insert
 
 function select(username) {
     return new Promise((resolve, reject) => {
-         const sql = 'SELECT * FROM [datingapplication].[tbl_users] where username = @username'
+        const sql = 'SELECT * FROM [datingapplication].[tbl_users] where username = @username'
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
