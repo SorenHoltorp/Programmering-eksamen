@@ -2,7 +2,10 @@ const express = require ('express');
 const app = express();
 const port = 7071; 
 const cors = require ('cors');
+const bodyParser = require ("body-parser")
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 /* - Kommer til at være noget vi skal bruge
 const signupRoute = require ("./controller/signupAPI")
@@ -24,17 +27,6 @@ app.post("/register", registerController);
 app.use("/signup", signupRoute);
 app.use("/", loginRoute )
 */
-
-// Alt den her kode gør, at man kan sende req til single-view applikations igennem cors
-app.use((req, res,next) => {
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control-Allow-Headers","*");
-if (req.method === "OPTIONS") {
-    res.header ("Access-Control-Allow-Methods","PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});  
-    }
-    next();
-});
 
 
 app.listen(port, () => {
