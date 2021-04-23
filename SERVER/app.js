@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 7071; 
+const port = 9000; 
 const cors = require ('cors');
 const bodyParser = require ("body-parser")
 
@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
 });
 
 // REGISTER CONTROLLER + POST
-const registerController = require('./API/Controllers/LoginController/registerController');
-app.post("/api/createUser/register", registerController);
+const registerController = require('./Controller/registerController');
+app.post("/register", registerController);
 
 /* -Kommer til at være noget vi skal bruge
 app.use("/signup", signupRoute);
