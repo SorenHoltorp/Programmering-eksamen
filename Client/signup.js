@@ -13,7 +13,7 @@ function register() {
         password: passwordRegister.value
     }
     // POST REQUEST til localhost
-    fetch('http://localhost:7071/register', {
+    fetch('http://localhost:7071/api/createUser/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

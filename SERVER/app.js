@@ -18,7 +18,7 @@ app.get("/",(req,res)=>{
 
 // REGISTER CONTROLLER + POST
 const registerController = require ('./API/Controllers/LoginController/registerController');
-app.post("/register", registerController);
+app.post("/api/createUser/register", registerController);
 
 /* -Kommer til at være noget vi skal bruge
 app.use("/signup", signupRoute);
