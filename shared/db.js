@@ -25,7 +25,7 @@ module.exports.startDb = startDb
 
 
 function insert(payload){
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject), async => {
         const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
             if (err){
@@ -44,7 +44,13 @@ function insert(payload){
         });
         connection.execSql(request)
 
+        let hashedPassword = await bcrypt.hash(password,8);
+        console.log(hashedPassword);
+
+        res.send("Testing");
     });
+
+
 }
 module.exports.insert = insert
 
