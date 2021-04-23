@@ -25,7 +25,7 @@ module.exports.startDb = startDb
 
 
 function insert(payload){
-    return new Promise((resolve, reject), async => {
+    return new Promise((resolve, reject) => {
         const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
             if (err){
