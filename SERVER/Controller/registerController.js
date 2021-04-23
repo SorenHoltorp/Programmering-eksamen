@@ -1,3 +1,6 @@
+const db = require('../shared/db')
+
+
 function registerController(req, res) {
     console.log("Server received request.")
     try {
@@ -10,8 +13,7 @@ function registerController(req, res) {
 
         // Roseneagle gør noget fedt her. newUser skal sendes til databasen, og vi skal have et respons fra databasen om, at alt er fjong
 
-        let succes = "It worked!";
-        res.json(succes)
+        res.json('It worked!')
     } 
     catch(err){
         console.log(err)
