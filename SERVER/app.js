@@ -25,7 +25,7 @@ app.use("/signup", signupRoute);
 app.use("/", loginRoute )
 */
 
-
+// Alt den her kode gør, at man kan sende req til single-view applikations igennem cors
 app.use((req, res,next) => {
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control-Allow-Headers","*");
