@@ -22,6 +22,7 @@ function register() {
     }).then(res => res.json()).then(data => {
         console.log(data)
         alert("Welcome to GIT-LAID")
+    }).catch((err) =>{
+        console.error("Error:", err)
     })
 }
-module.exports = register();
