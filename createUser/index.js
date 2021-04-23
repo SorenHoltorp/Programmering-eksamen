@@ -2,7 +2,6 @@ const db = require('../shared/db');
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
-
     try {
         await db.startDb(); //start db connection
     } catch (error) {
@@ -37,7 +36,6 @@ async function get(context, req){
         }
     }
 }
-
 async function post(context, req){
     try{
         let payload = req.body;
