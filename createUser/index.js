@@ -7,6 +7,7 @@ module.exports = async function (context, req) {
     } catch (error) {
         console.log("Error connecting to the database", error.message)
     }
+    
     switch (req.method) {
         case 'GET':
             await get(context, req);
