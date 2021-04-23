@@ -2,16 +2,16 @@
 function register() {
 
     // Henter HTML data
-    let nameRegister = document.getElementById('username');
+    let usernameRegister = document.getElementById('username');
     let emailRegister = document.getElementById('email');
     let passwordRegister = document.getElementById('password');
 
-
     let registerData = {
-        name: nameRegister.value,
-        email: emailRegister,
+        username: usernameRegister.value,
+        email: emailRegister.value,
         password: passwordRegister.value
     }
+    
     // POST REQUEST til localhost
     fetch('http://localhost:7071/register', {
         method: 'POST',
@@ -23,6 +23,6 @@ function register() {
         console.log(data)
         alert("Welcome to GIT-LAID")
     }).catch((err) =>{
-        console.error("Error:", err)
-    })
-}
+        console.error("Error:", err);
+    });
+};
