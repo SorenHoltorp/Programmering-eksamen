@@ -1,7 +1,7 @@
 const express = require ('express');
 const app = express();
 const port = 9000; 
-const cors = require ('cors')
+const cors = require ('cors');
 
 /* - Kommer til at være noget vi skal bruge
 const signupRoute = require ("./controller/signupAPI")
