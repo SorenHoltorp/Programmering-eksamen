@@ -8,17 +8,25 @@
 
 <body>
     <h1>Register and GIT-LAID!</h1>
-
+    <div>
     <form>
             <label for="username">Username:</label>
             <input type="text" name="username" id="username"> <br>
 
-            <label for="p1">Password:</label>
-            <input type="password" name="p1" id="password1" oninput="validatePassword()"> <br>
-            
-            <button type="button" name="">Register</button>
+            <label for="mail">Email:</label>
+            <input type="email" name="email" id="email"> <br>
 
+            <label for="p1">Password:</label>
+            <input type="password" name="p1" id="password"> <br>
+            
+            <button type="button" name="signupB" id="signupB" onclick="register()">Register</button>
     </form>
+
+    <a href="frontpage.html">
+        <button>Back</button>
+    </a>
+
+</div>
 
 </body>
 
