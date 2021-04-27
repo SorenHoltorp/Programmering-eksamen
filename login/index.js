@@ -25,6 +25,7 @@ module.exports = async function (context, req) {
 
 
 // two-factor authentication
+
 /*
 async function get(context, req){
     try{
@@ -32,7 +33,7 @@ async function get(context, req){
         let password = req.query.password;
         let user = await db.login(email,password)
         context.res = {
-            body: user ({status: 'Success'})
+            body: user ({status: 'Success, login'})
         };
     } catch(error){
         context.res = {

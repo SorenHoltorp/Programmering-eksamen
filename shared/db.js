@@ -36,7 +36,8 @@ function insert(payload) {
         request.addParameter('username', TYPES.VarChar, payload.username)
         request.addParameter('email', TYPES.VarChar, payload.email)
         request.addParameter('password', TYPES.VarChar, payload.password)
-        
+// const hash = bcrypt.hashSync(password, 8);
+// Store hash in your password DB.  
 
         request.on('requestCompleted', (row) => {
             console.log('User inserted', row);
@@ -83,7 +84,7 @@ function login(email, password) {
         });
     request.addParameter('email', TYPES.VarChar, email)
     request.addParameter('password', TYPES.VarChar, password)
-
+//bcrypt.compareSync(password, hash); // true
     request.on('row', (colomns) => {
         resolve(colomns)
         console.log('Login Succes')
