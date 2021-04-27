@@ -25,3 +25,20 @@ module.exports = async function (context, req) {
 
 
 // two-factor authentication
+/*
+async function get(context, req){
+    try{
+        let email = req.query.email;
+        let password = req.query.password;
+        let user = await db.login(email,password)
+        context.res = {
+            body: user ({status: 'Success'})
+        };
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: `No user found - ${error.message}`
+        }
+    }
+}
+*/
