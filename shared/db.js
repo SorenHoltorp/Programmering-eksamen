@@ -1,7 +1,7 @@
 const { Connection, Request, TYPES} = require('tedious');
 const config = require('./config.json');
 //const jwt = require("jsonwebtoken");
-//const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
 
@@ -24,7 +24,7 @@ module.exports.sqlConnection = connection
 module.exports.startDb = startDb
 
 // Funktion til at oprette bruger i databasen
-function insert(payload){
+function insert(payload) {
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
@@ -43,7 +43,17 @@ function insert(payload){
             resolve('user inserted', row)
         });
         connection.execSql(request)
+    
 
+      //  let hashedPassword = bcrypt.hash(password, 8);
+       //  console.log(hashedPassword);
+
+       // res.send("testing")
+
+
+
+
+    
     });
 
 }
