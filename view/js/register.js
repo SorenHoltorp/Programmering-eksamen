@@ -24,6 +24,7 @@ form.addEventListener('submit', function(e) {
         return response.json()
     })
     .then((data) => {
+        location.href = "mainpage.html";
         console.log(data)
     }).catch((err) =>{
         console.log(err)
