@@ -1,13 +1,9 @@
 var form = document.getElementById("create")
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault()
-
+function registerFunction(){
     var username = document.getElementById("username").value
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
-
-  
 
     fetch("http://localhost:7071/api/register", {
         mode: 'no-cors',
@@ -30,4 +26,4 @@ form.addEventListener('submit', function(e) {
     }).catch((err) =>{
         console.log(err)
     })
-})
+}
