@@ -26,7 +26,7 @@ module.exports = async function (context, req) {
 
 // two-factor authentication
 
-/*
+
 async function get(context, req){
     try{
         let email = req.query.email;
@@ -42,4 +42,3 @@ async function get(context, req){
         }
     }
 }
-*/
