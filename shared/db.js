@@ -1,7 +1,7 @@
 const { Connection, Request, TYPES} = require('tedious');
 const config = require('./config.json');
 //const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
 
@@ -43,16 +43,6 @@ function insert(payload) {
             resolve('user inserted', row)
         });
         connection.execSql(request)
-    
-
-      //  let hashedPassword = bcrypt.hash(password, 8);
-       //  console.log(hashedPassword);
-
-       // res.send("testing")
-
-
-
-
     
     });
 
