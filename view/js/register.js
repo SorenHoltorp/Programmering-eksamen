@@ -25,6 +25,12 @@ form.addEventListener('submit', function(e) {
     })
     .then((data) => {
         console.log(data)
+    /*.then((response) =>{
+            console.log(response)
+            localStorage.setItem('activeUser', JSON.stringify(response.data))
+            window.location.href = 'mainpage.html';
+    })
+    */
     }).catch((err) =>{
         console.log(err)
     })
