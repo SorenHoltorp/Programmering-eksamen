@@ -96,11 +96,3 @@ function login(email, password) {
 module.exports.login = login
 
 
-
-/*
-then(response => {
-              console.log(response)
-              localStorage.setItem('activeUser', JSON.stringify(response.data))
-              window.location.href = 'mainpage.html';
-          })
-*/
