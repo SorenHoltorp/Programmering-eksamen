@@ -1,6 +1,8 @@
-var form = document.getElementById("create")
+var form = document.getElementById("register")
 
-function registerFunction(){
+form.addEventListener('submit', function(e) {
+    e.preventDefault()
+
     var username = document.getElementById("username").value
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
@@ -26,4 +28,4 @@ function registerFunction(){
     }).catch((err) =>{
         console.log(err)
     })
-}
+})
