@@ -63,7 +63,7 @@ function select(username) {
         });
         request.addParameter('username', TYPES.VarChar, username)
         request.on('row', (colomns) => {
-            resolve(columns)
+            resolve(colomns)
         });
         connection.execSql(request)
     })
@@ -73,7 +73,7 @@ module.exports.select = select
 
 function login(email, password) {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email AND password = @password';
+        const sql = 'SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email AND password = @password';
         const request = new Request(sql, (err, rowcount) => {
             if(err) {
                 reject(err)

@@ -1,19 +1,19 @@
-var form = document.getElementById("register")
+var login = document.getElementById("login")
 
-form.addEventListener('submit', function(e) {
+login.addEventListener('login1', function(e) {
     e.preventDefault()
 
-    var username = document.getElementById("username").value
+    const history = useHistory()
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
+  
 
-    fetch("http://localhost:7071/api/register", {
+    fetch("http://localhost:7071/api/login", {
         mode: 'no-cors',
         method: 'POST',
         body: JSON.stringify({
-            username: username,
             email: email,
-            password: password
+            password: password,
            
         }), 
         headers: {
@@ -24,10 +24,9 @@ form.addEventListener('submit', function(e) {
         return response.json()
     })
     .then((data) => {
+        location.href = "/view/mainpage.html";
         console.log(data)
     }).catch((err) =>{
         console.log(err)
     })
 })
-
-

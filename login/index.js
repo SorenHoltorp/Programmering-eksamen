@@ -31,7 +31,7 @@ async function get(context, req){
     try{
         let email = req.query.email;
         let password = req.query.password;
-        let user = await db.login(email,password)
+        let user = await db.login(email, password)
         context.res = {
             body: user ({status: 'Success, login'})
         };
@@ -40,5 +40,23 @@ async function get(context, req){
             status: 400,
             body: `No user found - ${error.message}`
         }
+    }
+}
+
+async function post(context, req){
+    try{
+        let email = req.query.email;
+        let password = req.query.password;
+            await db.login(email, password)
+            context.res.status(302)
+            .set('location','http://localhost:7071/mainpage')
+            .send();
+    }
+     catch(error){
+            context.res = {
+                status: 400, 
+                body: error.message
+            }
+
     }
 }
