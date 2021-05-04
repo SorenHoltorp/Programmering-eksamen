@@ -41,11 +41,15 @@ async function get(context, req){
 async function post(context, req){
     try{
         let payload = req.body;
-        await db.insert(payload)
+        //await db.insert(payload)
+        
+        console.log(payload)
+
         context.res = {
-            body: {status: 'Success'}
+            body: ["succes"]
         }
     } catch(error){
+        console.log("i was here")
         context.res = {
             status: 400,
             body: error.message

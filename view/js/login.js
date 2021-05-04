@@ -9,7 +9,6 @@ login.addEventListener('login1', function(e) {
   
 
     fetch("http://localhost:7071/api/login", {
-        mode: 'no-cors',
         method: 'POST',
         body: JSON.stringify({
             email: email,
@@ -24,7 +23,7 @@ login.addEventListener('login1', function(e) {
         return response.json()
     })
     .then((data) => {
-        location.href = "/view/mainpage.html";
+        location.href = "mainpage.html";
         console.log(data)
     }).catch((err) =>{
         console.log(err)

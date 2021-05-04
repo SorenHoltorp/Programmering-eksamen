@@ -1,6 +1,6 @@
 var form = document.getElementById("register")
 
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', function (e) {
     e.preventDefault()
 
     var username = document.getElementById("username").value
@@ -8,26 +8,23 @@ form.addEventListener('submit', function(e) {
     var password = document.getElementById("password").value
 
     fetch("http://localhost:7071/api/register", {
-        mode: 'no-cors',
         method: 'POST',
         body: JSON.stringify({
             username: username,
             email: email,
             password: password
-           
-        }), 
+        }),
         headers: {
             "Content-Type": "application/json; charset-UTF-8"
         }
-    })
-    .then((response) => {
-        return response.json()
-    })
-    .then((data) => {
-        console.log(data)
-    }).catch((err) =>{
-        console.log(err)
-    })
+    }).then((response) =>
+        response.json()).then((data) => {
+            if(data[0] = "succes"){
+            location.href = "login.html"
+            } else {
+                alert("failed")
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
 })
-
-
