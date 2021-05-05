@@ -15,9 +15,12 @@ module.exports = async function (context, req) {
         case 'POST':
             await post(context, req);
             break
+        case "PUT":
+            await put(context, req);
+            break;
         default:
             context.res = {
-                body: "Please get or post"
+                body: "Method not accepted"
             };
             break
     }
