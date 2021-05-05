@@ -41,12 +41,9 @@ async function get(context, req){
 async function post(context, req){
     try{
         let payload = req.body;
-<<<<<<< HEAD
-        //await db.insert(payload)
-=======
         await db.insert(payload)
         
->>>>>>> d81b34f003327b1f236bf0671e3f7205ac9d27f9
+
         console.log(payload)
         
         context.res = {
