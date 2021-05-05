@@ -46,7 +46,7 @@ async function post(context, req){
             }
         } else {
             context.res = {
-                body: "Incorrect password"
+                body: ["Incorrect password"]
             }
         } 
         

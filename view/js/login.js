@@ -1,9 +1,8 @@
 var login = document.getElementById("login")
 
-login.addEventListener('login1', function(e) {
+login.addEventListener('submit', function(e) {
     e.preventDefault()
 
-    const history = useHistory()
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
   
@@ -12,8 +11,7 @@ login.addEventListener('login1', function(e) {
         method: 'POST',
         body: JSON.stringify({
             email: email,
-            password: password,
-           
+            password: password
         }), 
         headers: {
             "Content-Type": "application/json; charset-UTF-8"
@@ -21,9 +19,8 @@ login.addEventListener('login1', function(e) {
     })
     .then((response) => {
         return response.json()
-    })
-    .then((data) => {
-        location.href = "mainpage.html";
+    }).then((data) => {
+        //location.href = "mainpage.html";
         console.log(data)
     }).catch((err) =>{
         console.log(err)
