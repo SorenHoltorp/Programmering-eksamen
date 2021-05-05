@@ -1,4 +1,5 @@
 const db = require('../shared/db');
+const bcrypt = require("bcryptjs")
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -35,7 +36,9 @@ async function post(context, req){
 
         let user = await db.login(email)
 
-        const passwordDB = user[6].value
+        console.log('user: ' + user)
+    
+        const passwordDB = user[3].value
 
         const passwordMatch = await bcrypt.compare(password, passwordDB)
 
