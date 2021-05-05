@@ -27,7 +27,7 @@ module.exports = async function (context, req) {
 // two-factor authentication
 
 
-async function get(context, req){
+async function post(context, req){
     try{
 
         let email = req.body.email
@@ -49,5 +49,11 @@ async function get(context, req){
                 body: "Incorrect password"
             }
         } 
+        
+    } catch(error) {
+        context.res = {
+            status: 400,
+            body: error.message
+        }
     }
 }

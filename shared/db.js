@@ -71,10 +71,10 @@ function select(username) {
 
 module.exports.select = select
 
-function login(email, password) {
+function login(email) {
     return new Promise((resolve, reject) => {
         
-        const sql = `SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email AND password = @password`;
+        const sql = `SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if(err) {
                 reject(err)
@@ -84,8 +84,7 @@ function login(email, password) {
             }
         });
     
-        request.addParameter('email', TYPES.VarChar, email)
-    request.addParameter('password', TYPES.VarChar, password)
+    request.addParameter('email', TYPES.VarChar, email)
 
     //bcrypt.compareSync(password, hash); // true
     
