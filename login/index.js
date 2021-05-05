@@ -1,5 +1,4 @@
 const db = require('../shared/db');
-const bcrypt = require('bcryptjs')
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -28,8 +27,9 @@ module.exports = async function (context, req) {
 // two-factor authentication
 
 
-async function post(context, req) {
+async function get(context, req){
     try{
+
         let email = req.body.email
         let password = req.body.password
 
@@ -48,11 +48,6 @@ async function post(context, req) {
             context.res = {
                 body: "Incorrect password"
             }
-        }
-    } catch(error) {
-        context.res = {
-            status: 400,
-            body: error.message
-        }
+        } 
     }
 }
