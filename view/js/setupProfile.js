@@ -8,7 +8,7 @@ form.addEventListener('submit', function (e) {
     var gender = document.querySelector('input[name="gender"]:checked').value
     var university = document.getElementById("university").value
 
-    fetch("http://localhost:7071/api/createProfile", {
+    fetch("http://localhost:7071/api/setupProfile", {
         method: 'POST',
         body: JSON.stringify({
             name: name,
