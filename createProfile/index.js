@@ -1,12 +1,34 @@
-module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
+const db = require('../shared/db');
 
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
-
+<<<<<<< HEAD
     context.res = {
         body: responseMessage
     };
 }
+=======
+module.exports = async function (context, req) {
+    context.log('JavaScript HTTP trigger function processed a request.')
+    try {
+        await db.startDb(); //start db connection
+    } catch (error) {
+        console.log("Error connecting to the database", error.message)
+    }
+    
+    switch (req.method) {
+        case 'GET':
+            await get(context, req);
+            break;
+        case 'POST':
+            await post(context, req);
+            break
+        case "PUT":
+            await put(context, req);
+            break;
+        default:
+            context.res = {
+                body: "Method not accepted"
+            };
+            break
+    }
+}
+>>>>>>> d81b34f003327b1f236bf0671e3f7205ac9d27f9

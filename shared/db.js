@@ -52,7 +52,7 @@ module.exports.insert = insert
 
 function select(username) {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT username FROM [datingapplication].[tbl_users] WHERE username = @username'
+        const sql = `SELECT username FROM [datingapplication].[tbl_users] WHERE username = @username`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -73,7 +73,8 @@ module.exports.select = select
 
 function login(email, password) {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email AND password = @password';
+        
+        const sql = `SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email AND password = @password`;
         const request = new Request(sql, (err, rowcount) => {
             if(err) {
                 reject(err)
@@ -82,9 +83,12 @@ function login(email, password) {
                 reject({message: 'User does not exist'})
             }
         });
-    request.addParameter('email', TYPES.VarChar, email)
+    
+        request.addParameter('email', TYPES.VarChar, email)
     request.addParameter('password', TYPES.VarChar, password)
-//bcrypt.compareSync(password, hash); // true
+
+    //bcrypt.compareSync(password, hash); // true
+    
     request.on('row', (colomns) => {
         resolve(colomns)
         console.log('Login Succes')

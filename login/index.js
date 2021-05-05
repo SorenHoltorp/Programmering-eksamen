@@ -48,7 +48,8 @@ async function post(context, req){
         let email = req.query.email;
         let password = req.query.password;
             await db.login(email, password)
-            context.res.status(302)
+            context.res
+            .status(302)
             .set('location','http://localhost:7071/mainpage')
             .send();
     }
