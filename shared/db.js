@@ -74,20 +74,19 @@ module.exports.select = select
 function login(email, password) {
     return new Promise((resolve, reject) => {
         
-        const sql = `SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email AND password = @password`;
+        const sql = `SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
+            
             if(err) {
                 reject(err)
-                console.log(reject)
+                throw(err)
+
             } else if (rowcount == 0) {
                 reject({message: 'User does not exist'})
             }
         });
     
-        request.addParameter('email', TYPES.VarChar, email)
-    request.addParameter('password', TYPES.VarChar, password)
-
-    //bcrypt.compareSync(password, hash); // true
+    request.addParameter('email', TYPES.VarChar, email)
     
     request.on('row', (colomns) => {
         resolve(colomns)

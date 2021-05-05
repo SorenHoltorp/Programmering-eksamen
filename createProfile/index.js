@@ -1,11 +1,6 @@
 const db = require('../shared/db');
 
-<<<<<<< HEAD
-    context.res = {
-        body: responseMessage
-    };
-}
-=======
+
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
     try {
@@ -31,4 +26,4 @@ module.exports = async function (context, req) {
             break
     }
 }
->>>>>>> d81b34f003327b1f236bf0671e3f7205ac9d27f9
+

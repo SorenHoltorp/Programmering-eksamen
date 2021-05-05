@@ -1,4 +1,5 @@
 const db = require('../shared/db');
+const bcrypt = require('bcryptjs')
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -27,37 +28,31 @@ module.exports = async function (context, req) {
 // two-factor authentication
 
 
-async function get(context, req){
+async function post(context, req) {
     try{
-        let email = req.query.email;
-        let password = req.query.password;
-        let user = await db.login(email, password)
-        context.res = {
-            body: user ({status: 'Success, login'})
-        };
-    } catch(error){
+        let email = req.body.email
+        let password = req.body.password
+
+        let user = await db.login(email)
+
+        const passwordDB = user[6].value
+
+        const passwordMatch = await bcrypt.compare(password, passwordDB)
+
+        if(passwordMatch) {
+            context.res = {
+                status: 200,
+                body: "login Succes"
+            }
+        } else {
+            context.res = {
+                body: "Incorrect password"
+            }
+        }
+    } catch(error) {
         context.res = {
             status: 400,
-            body: `No user found - ${error.message}`
+            body: error.message
         }
-    }
-}
-
-async function post(context, req){
-    try{
-        let email = req.query.email;
-        let password = req.query.password;
-            await db.login(email, password)
-            context.res
-            .status(302)
-            .set('location','http://localhost:7071/mainpage')
-            .send();
-    }
-     catch(error){
-            context.res = {
-                status: 400, 
-                body: error.message
-            }
-
     }
 }
