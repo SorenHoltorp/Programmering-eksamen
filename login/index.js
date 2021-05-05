@@ -36,8 +36,9 @@ async function post(context, req){
 
         let user = await db.login(email)
 
+
         console.log('user: ' + user)
-    
+
         const passwordDB = user[3].value
 
         const passwordMatch = await bcrypt.compare(password, passwordDB)
@@ -45,7 +46,7 @@ async function post(context, req){
         if(passwordMatch) {
             context.res = {
                 status: 200,
-                body: "Login Succes"
+                body: "Login Succes!"
             }
         } else {
             context.res = {

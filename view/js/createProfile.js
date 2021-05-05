@@ -1,4 +1,4 @@
-var form = document.getElementById("createUser")
+var form = document.getElementById("createProfile")
 
 form.addEventListener('submit', function (e) {
     e.preventDefault()
@@ -22,8 +22,8 @@ form.addEventListener('submit', function (e) {
     }).then((response) =>
         response.json()).then((data) => {
             if (data[0] = "succes") {
-                location.href = "mainpage.html"
-                alert(data[0])
+                //location.href = "mainpage.html"
+                console.log("Succes, but there is not made a function on the server on this yet")
             } else {
                 alert("failed")
             }
