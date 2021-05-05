@@ -1,11 +1,5 @@
 const db = require('../shared/db');
 
-<<<<<<< HEAD
-    context.res = {
-        body: responseMessage
-    };
-}
-=======
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
     try {
@@ -21,9 +15,6 @@ module.exports = async function (context, req) {
         case 'POST':
             await post(context, req);
             break
-        case "PUT":
-            await put(context, req);
-            break;
         default:
             context.res = {
                 body: "Method not accepted"
@@ -31,4 +22,27 @@ module.exports = async function (context, req) {
             break
     }
 }
->>>>>>> d81b34f003327b1f236bf0671e3f7205ac9d27f9
+
+
+async function get(context, req){
+    try{
+        console.log("I got a get request for createProfile")
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: `Create profile failed - ${error.message}`
+        }
+    }
+}
+
+async function post(context, req){
+    try{
+        console.log("I got a post request for createProfile")
+    } catch(error){
+            context.res = {
+                status: 400, 
+                body: error.message
+            }
+
+    }
+}
