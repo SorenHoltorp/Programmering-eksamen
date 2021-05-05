@@ -9,9 +9,6 @@ module.exports = async function (context, req) {
     }
     
     switch (req.method) {
-        case 'GET':
-            await get(context, req);
-            break;
         case 'POST':
             await post(context, req);
             break
@@ -20,22 +17,6 @@ module.exports = async function (context, req) {
                 body: "Method not accepted"
             };
             break
-    }
-}
-
-// funktionen for get er ikke lavet endnu. Men vejen virker.
-async function get(context, req){
-    try{
-        console.log("I got a get request for createProfile")
-        console.log(req.body)
-        context.res = {
-            body: ["sucess"]
-        }
-    } catch(error){
-        context.res = {
-            status: 400,
-            body: `Create profile failed - ${error.message}`
-        }
     }
 }
 

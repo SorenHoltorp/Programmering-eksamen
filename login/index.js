@@ -34,12 +34,7 @@ async function post(context, req){
 
         let email = req.body.email
         let password = req.body.password
-
         let user = await db.login(email)
-
-
-        // const passwordMatch = await bcrypt.compare(password, passwordDB)
-
         const passwordDB = user[3].value
 
         if(passwordDB === password) {
