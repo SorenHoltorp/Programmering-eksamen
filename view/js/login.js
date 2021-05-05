@@ -16,13 +16,11 @@ login.addEventListener('submit', function(e) {
         headers: {
             "Content-Type": "application/json; charset-UTF-8"
         }
-    })
-    .then((response) => {
-        return response.json()
-    }).then((data) => {
+    }).then((response) => 
+        response.json()).then((data) => {
         //location.href = "mainpage.html";
-        console.log(data)
-    }).catch((err) =>{
+        console.log(data[0])
+    }).catch((err) => {
         console.log(err)
     })
 })

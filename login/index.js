@@ -50,7 +50,7 @@ async function post(context, req){
         if(passwordMatch) {
             context.res = {
                 status: 200,
-                body: "Login Succes!"
+                body: ["Correct password"]
             }
         } else {
             context.res = {
