@@ -42,6 +42,8 @@ async function get(context, req){
 async function post(context, req){
     try{
         let payload = req.body;
+        // const salt = await bcrypt.genSalt(10);
+        // const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         await db.insert(payload)
         
@@ -51,7 +53,6 @@ async function post(context, req){
             body: ["succes"]
         }
     } catch(error){
-        console.log("i was here")
         context.res = {
             status: 400,
             body: error.message
