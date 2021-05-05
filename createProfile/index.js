@@ -23,10 +23,14 @@ module.exports = async function (context, req) {
     }
 }
 
-
+// funktionen for get er ikke lavet endnu. Men vejen virker.
 async function get(context, req){
     try{
         console.log("I got a get request for createProfile")
+        console.log(req.body)
+        context.res = {
+            body: ["sucess"]
+        }
     } catch(error){
         context.res = {
             status: 400,
@@ -35,14 +39,18 @@ async function get(context, req){
     }
 }
 
+// funktionen for post er ikke lavet endnu. Men vejen virker.
 async function post(context, req){
     try{
         console.log("I got a post request for createProfile")
+        console.log(req.body)
+        context.res = {
+            body: ["succes"]
+        }
     } catch(error){
             context.res = {
                 status: 400, 
                 body: error.message
             }
-
     }
 }

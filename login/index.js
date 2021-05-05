@@ -35,14 +35,14 @@ async function post(context, req){
 
         let user = await db.login(email)
 
-        const passwordDB = user[6].value
+        const passwordDB = user[3].value
 
         const passwordMatch = await bcrypt.compare(password, passwordDB)
 
         if(passwordMatch) {
             context.res = {
                 status: 200,
-                body: "Login Succes"
+                body: ["Login Succes!"]
             }
         } else {
             context.res = {

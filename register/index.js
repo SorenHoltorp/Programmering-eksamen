@@ -44,7 +44,6 @@ async function post(context, req){
 
         await db.insert(payload)
         
-
         console.log(payload)
         
         context.res = {
