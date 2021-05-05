@@ -53,7 +53,6 @@ async function post(context, req){
             body: ["succes"]
         }
     } catch(error){
-        console.log("i was here")
         context.res = {
             status: 400,
             body: error.message
