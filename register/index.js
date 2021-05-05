@@ -42,6 +42,8 @@ async function get(context, req){
 async function post(context, req){
     try{
         let payload = req.body;
+        // const salt = await bcrypt.genSalt(10);
+        // const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         await db.insert(payload)
         
