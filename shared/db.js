@@ -74,7 +74,7 @@ module.exports.select = select
 function login(email) {
     return new Promise((resolve, reject) => {
         
-        const sql = `SELECT _id FROM [datingapplication].[tbl_users] WHERE email = @email`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if(err) {
                 reject(err)

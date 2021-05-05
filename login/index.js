@@ -1,4 +1,5 @@
 const db = require('../shared/db');
+const bcrypt = require("bcryptjs")
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -35,6 +36,9 @@ async function post(context, req){
 
         let user = await db.login(email)
 
+
+        console.log('user: ' + user)
+
         const passwordDB = user[3].value
 
         const passwordMatch = await bcrypt.compare(password, passwordDB)
@@ -42,7 +46,7 @@ async function post(context, req){
         if(passwordMatch) {
             context.res = {
                 status: 200,
-                body: ["Login Succes!"]
+                body: "Login Succes!"
             }
         } else {
             context.res = {
