@@ -1,7 +1,7 @@
 const { Connection, Request, TYPES} = require('tedious');
 const config = require('./config.json');
 //const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
 
@@ -33,11 +33,11 @@ function insert(payload) {
                 console.log(err)
             }
         });
+        
         request.addParameter('username', TYPES.VarChar, payload.username)
         request.addParameter('email', TYPES.VarChar, payload.email)
         request.addParameter('password', TYPES.VarChar, payload.password)
-// const hash = bcrypt.hashSync(password, 8);
-// Store hash in your password DB.  
+
 
         request.on('requestCompleted', (row) => {
             console.log('User inserted', row);

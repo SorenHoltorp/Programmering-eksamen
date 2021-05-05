@@ -18,7 +18,7 @@ login.addEventListener('submit', function(e) {
         }
     }).then((response) => 
         response.json()).then((data) => {
-        //location.href = "mainpage.html";
+        location.href = "mainpage.html";
         console.log(data[0])
     }).catch((err) => {
         console.log(err)
