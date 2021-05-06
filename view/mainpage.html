@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mainpage</title>
 </head>
-<body>
+<body onload="checkIfLoggedIn()">
 
     <h1>
         Mainpage
     </h1>
     <a href="setupProfile.html" class="setupProfile-nav">Setup Profile</a>
-    <a href="login.html" class="logout-nav">Log out</a>
+    <a href="login.html" class="logout-nav" onclick="logout()">Log out</a>
+
+    <script src="js/mainpage.js"></script>
 
 </body>
 </html>

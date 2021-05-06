@@ -90,7 +90,7 @@ function login(email) {
     
     request.on('row', (colomns) => {
         resolve(colomns)
-        console.log('Login Succes!!!')
+        console.log('Db login function succeeded')
     });
     connection.execSql(request)
     })

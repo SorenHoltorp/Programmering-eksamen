@@ -1,6 +1,24 @@
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = require('../keys')
 
+//JWT-token safe
+const privateKey = 'secret-key';
+
+function safeJWT(req, res, next) {
+    let token = req.headers.authentication;
+    jwt.verify(token, privateKey, { algorithm: 'HS256' }, (err, decoded) => {
+        if (err) {
+            console.log('jwt decoding error')
+        } else {
+            req.usernameFromToken = decoded;
+            next();
+        }
+    })
+};
+
+module.exports = safeJWT;
+
+
+/*
 module.exports = (req, res, next) => {
     user = req.body
     const {authorization} = req.headers
@@ -22,3 +40,4 @@ module.exports = (req, res, next) => {
         })
     }) 
 }
+*/

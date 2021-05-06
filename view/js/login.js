@@ -1,3 +1,14 @@
+//Validates if u are allready logged in
+function index() {
+    if(localStorage.getItem('token')){
+        location.href = "mainpage.html"
+        alert('You are allready logged in. Press OK to continue.');
+    } else {
+        return;
+    }
+}
+
+//Login api to server
 var login = document.getElementById("login")
 
 login.addEventListener('submit', function(e) {
@@ -20,6 +31,12 @@ login.addEventListener('submit', function(e) {
         response.json()).then((data) => {
         location.href = "mainpage.html";
         console.log(data[0])
+        if (localStorage.getItem('token')) {
+            localStorage.removeItem('token');
+            localStorage.setItem('token', data[1]);
+        } else {
+            localStorage.setItem('token', data[1]);
+        }
     }).catch((err) => {
         console.log(err)
     })

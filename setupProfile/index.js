@@ -1,5 +1,5 @@
 const db = require('../shared/db');
-const requireLogin = require('../middleware/requireLogin')
+const requireLogin = require('../middleware/Jwt')
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')

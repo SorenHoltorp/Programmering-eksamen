@@ -1,6 +1,9 @@
 const db = require('../shared/db');
+const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
 const setupProfile = require('../setupProfile');
+
+const privateKey = 'secret-key';
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -37,10 +40,14 @@ async function post(context, req){
         let user = await db.login(email)
         const passwordDB = user[3].value
 
+        //JWT token
+        let token = jwt.sign(email, privateKey, { algorithm: 'HS256' });
+        console.log("the token is: " + token)
+
         if(passwordDB === password) {
             context.res = {
                 status: 200,
-                body: ["Correct password"]
+                body: ["Correct password", token]
             }
         } else {
             context.res = {
@@ -49,6 +56,7 @@ async function post(context, req){
         } 
         
     } catch(error) {
+        console.log("error in login.", error)
         context.res = {
             status: 400,
             body: error.message
