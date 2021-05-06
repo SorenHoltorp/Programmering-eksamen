@@ -5,8 +5,10 @@ form.addEventListener('submit', function (e) {
 
     var name = document.getElementById("name").value
     var age = document.getElementById("age").value
-    var gender = document.querySelector('input[name="gender"]:checked').value
-    var university = document.getElementById("university").value
+    var gender = document.getElementById('gender').value
+    var interests = document.getElementById("interests").value
+    var university = document.getElementById("university").value 
+    var password = document.getElementById("password").value
 
     fetch("http://localhost:7071/api/setupProfile", {
         method: 'POST',
@@ -14,7 +16,9 @@ form.addEventListener('submit', function (e) {
             name: name,
             age: age,
             gender: gender,
-            university: university
+            university: university,
+            interests: interests,
+            password: password
         }),
         headers: {
             "Content-Type": "application/json; charset-UTF-8"

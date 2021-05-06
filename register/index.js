@@ -46,7 +46,6 @@ async function post(context, req){
         // const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         await db.insert(payload)
-        
         console.log(payload)
         
         context.res = {

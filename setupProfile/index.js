@@ -1,4 +1,5 @@
 const db = require('../shared/db');
+const requireLogin = require('../middleware/requireLogin')
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -20,18 +21,19 @@ module.exports = async function (context, req) {
     }
 }
 
-// funktionen for post er ikke lavet endnu. Men vejen virker.
 async function post(context, req){
     try{
-        console.log("I got a post request for createProfile")
-        console.log(req.body)
+        let payload = req.body;
+        await db.createProfile(payload)
+        console.log(payload)
+        
         context.res = {
             body: ["succes"]
         }
     } catch(error){
-            context.res = {
-                status: 400, 
-                body: error.message
-            }
+        context.res = {
+            status: 400,
+            body: error.message
+        }
     }
 }

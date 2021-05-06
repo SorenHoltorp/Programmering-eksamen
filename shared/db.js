@@ -99,3 +99,32 @@ function login(email) {
 module.exports.login = login
 
 
+// Funktion til at oprette brugerens profil i databasen
+function createProfile(payload) {
+    return new Promise((resolve, reject) => {
+        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interests, university, password) VALUES (@name, @age, @gender, @interests, @university, @password)`
+        const request = new Request(sql, (err) => {
+            if (err){
+                reject(err)
+                console.log(err)
+            }
+        });
+        
+        request.addParameter('name', TYPES.VarChar, payload.name)
+        request.addParameter('age', TYPES.SmallInt, payload.age)
+        request.addParameter('gender', TYPES.VarChar, payload.gender)
+        request.addParameter('interests', TYPES.VarChar, payload.interests)
+        request.addParameter('university', TYPES.VarChar, payload.university)
+        request.addParameter('password', TYPES.VarChar, payload.password)
+
+
+        request.on('requestCompleted', (row) => {
+            console.log('Profile created', row);
+            resolve('Profile created', row)
+        });
+        connection.execSql(request)
+    
+    });
+
+}
+module.exports.createProfile = createProfile
