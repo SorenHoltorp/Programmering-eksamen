@@ -14,7 +14,7 @@ function logout() {
 }
 
 
-var form = document.getElementById("createProfile")
+var form = document.getElementById("setupProfile")
 
 form.addEventListener('submit', function (e) {
     e.preventDefault()
@@ -22,9 +22,11 @@ form.addEventListener('submit', function (e) {
     var name = document.getElementById("name").value
     var age = document.getElementById("age").value
     var gender = document.getElementById('gender').value
-    var interests = document.getElementById("interests").value
+    var interest1 = document.getElementById("interest1").value
+    var interest2 = document.getElementById("interest2").value
+    var interest3 = document.getElementById("interest3").value
     var university = document.getElementById("university").value 
-    var password = document.getElementById("password").value
+    
 
     fetch("http://localhost:7071/api/setupProfile", {
         method: 'POST',
@@ -33,7 +35,9 @@ form.addEventListener('submit', function (e) {
             age: age,
             gender: gender,
             university: university,
-            interests: interests,
+            interest1: interest1,
+            interest2: interest2,
+            interest3: interest3
         }),
         headers: {
             "Content-Type": "application/json; charset-UTF-8"
@@ -41,7 +45,7 @@ form.addEventListener('submit', function (e) {
     }).then((response) =>
         response.json()).then((data) => {
             if (data[0] = "succes") {
-                //location.href = "mainpage.html"
+                location.href = "mainpage.html"
                 console.log("Succes, but there is not made a function on the server on this yet")
             } else {
                 alert("failed")

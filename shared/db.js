@@ -102,7 +102,7 @@ module.exports.login = login
 // Funktion til at oprette brugerens profil i databasen
 function createProfile(payload) {
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interests, university, password) VALUES (@name, @age, @gender, @interests, @university, @password)`
+        const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -113,9 +113,10 @@ function createProfile(payload) {
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
         request.addParameter('gender', TYPES.VarChar, payload.gender)
-        request.addParameter('interests', TYPES.VarChar, payload.interests)
+        request.addParameter('interest1', TYPES.VarChar, payload.interest1)
+        request.addParameter('interest2', TYPES.VarChar, payload.interest2)
+        request.addParameter('interest3', TYPES.VarChar, payload.interest3)
         request.addParameter('university', TYPES.VarChar, payload.university)
-        request.addParameter('password', TYPES.VarChar, payload.password)
 
 
         request.on('requestCompleted', (row) => {
@@ -128,3 +129,25 @@ function createProfile(payload) {
 
 }
 module.exports.createProfile = createProfile
+
+
+function selectProfile(name) {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE name = @name`;
+        const request = new Request(sql, (err, rowcount) => {
+            if (err){
+                reject(err)
+                console.log(err)
+            } else if (rowcount == 0){
+                reject({message: 'User does not exits'})
+            }
+        });
+        request.addParameter('name', TYPES.VarChar, name)
+        request.on('row', (colomns) => {
+            resolve(colomns)
+        });
+        connection.execSql(request)
+    })
+}
+
+module.exports.selectProfile = selectProfile

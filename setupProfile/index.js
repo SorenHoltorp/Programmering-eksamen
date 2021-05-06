@@ -10,9 +10,15 @@ module.exports = async function (context, req) {
     }
     
     switch (req.method) {
+        case 'GET':
+            await get(context, req);
+            break;
         case 'POST':
             await post(context, req);
-            break
+            break;
+        case 'PUT':
+            await put(context, req);
+            break;
         default:
             context.res = {
                 body: "Method not accepted"
@@ -21,13 +27,29 @@ module.exports = async function (context, req) {
     }
 }
 
+async function get(context, req){
+    try{
+        let name = req.query.name;
+        let user = await db.selectProfile(name)
+        context.res = {
+            body: user
+        };
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: `No user - ${error.message}`
+        }
+    }
+}
+
 async function post(context, req){
     try{
-        let payload = req.body;
+        let payload = req.body
         await db.createProfile(payload)
         console.log(payload)
-        
+       
         context.res = {
+            updatedUser,
             body: ["succes"]
         }
     } catch(error){
