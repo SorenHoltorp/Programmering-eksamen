@@ -49,6 +49,7 @@ async function post(context, req){
                 status: 200,
                 body: ["Correct password", token]
             }
+            console.log(user)
         } else {
             context.res = {
                 body: ["Incorrect password"]
@@ -62,4 +63,5 @@ async function post(context, req){
             body: error.message
         }
     }
+    
 }

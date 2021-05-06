@@ -1,3 +1,19 @@
+function checkIfLoggedIn() {
+    if (localStorage.getItem('token')) {
+        return;
+    } else {
+        location.href = "login.html";
+    }
+};
+
+//returns to base if no token
+function logout() {
+    localStorage.removeItem('token');
+    location.href = "login.html";
+    alert("Bye, bye!");
+}
+
+
 var form = document.getElementById("createProfile")
 
 form.addEventListener('submit', function (e) {
@@ -18,7 +34,6 @@ form.addEventListener('submit', function (e) {
             gender: gender,
             university: university,
             interests: interests,
-            password: password
         }),
         headers: {
             "Content-Type": "application/json; charset-UTF-8"
