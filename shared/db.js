@@ -26,7 +26,7 @@ module.exports.startDb = startDb
 // Funktion til at oprette bruger i databasen
 function insert(payload) {
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
+        const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password, id) VALUES (@username, @email, @password, @id)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -52,7 +52,7 @@ module.exports.insert = insert
 
 function select(username) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT username FROM [datingapplication].[tbl_users] WHERE username = @username`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE username = @username`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -63,7 +63,8 @@ function select(username) {
         });
         request.addParameter('username', TYPES.VarChar, username)
         request.on('row', (colomns) => {
-            resolve(colomns)
+            let id = colomns[0].value
+            resolve(id)
         });
         connection.execSql(request)
     })
@@ -100,8 +101,8 @@ module.exports.login = login
 
 
 // Funktion til at oprette brugerens profil i databasen
-function createProfile(id, name, age, gender, interest1, interest2, interest3, university) {
-    return new Promise((resolve, reject) => {
+function createProfile(payload) {
+    return new Promise(async (resolve, reject) => {
         // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
         interest2 = @interest2, interest3 = @interest3, university = @university WHERE id = @id`
@@ -112,14 +113,14 @@ function createProfile(id, name, age, gender, interest1, interest2, interest3, u
             }
         });
         
-        request.addParameter('id', TYPES.Int, id)
-        request.addParameter('name', TYPES.VarChar, name)
-        request.addParameter('age', TYPES.SmallInt, age)
-        request.addParameter('gender', TYPES.VarChar, gender)
-        request.addParameter('interest1', TYPES.VarChar, interest1)
-        request.addParameter('interest2', TYPES.VarChar, interest2)
-        request.addParameter('interest3', TYPES.VarChar, interest3)
-        request.addParameter('university', TYPES.VarChar, university)
+        request.addParameter('id', TYPES.VarChar, payload.id)
+        request.addParameter('name', TYPES.VarChar, payload.name)
+        request.addParameter('age', TYPES.SmallInt, payload.age)
+        request.addParameter('gender', TYPES.VarChar, payload.gender)
+        request.addParameter('interest1', TYPES.VarChar, payload.interest1)
+        request.addParameter('interest2', TYPES.VarChar, payload.interest2)
+        request.addParameter('interest3', TYPES.VarChar, payload.interest3)
+        request.addParameter('university', TYPES.VarChar, payload.university)
 
 
         request.on('requestCompleted', (row) => {
