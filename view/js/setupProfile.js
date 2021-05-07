@@ -25,7 +25,8 @@ form.addEventListener('submit', function (e) {
     var interest1 = document.getElementById("interest1").value
     var interest2 = document.getElementById("interest2").value
     var interest3 = document.getElementById("interest3").value
-    var university = document.getElementById("university").value
+    var university = document.getElementById("university").value 
+    var email = document.getElementById("email").value 
     
     
 
@@ -35,10 +36,11 @@ form.addEventListener('submit', function (e) {
             name: name,
             age: age,
             gender: gender,
+            university: university,
             interest1: interest1,
             interest2: interest2,
             interest3: interest3,
-             university: university
+            email: email
         }),
         headers: {
             "Content-Type": "application/json; charset-UTF-8"
@@ -46,7 +48,7 @@ form.addEventListener('submit', function (e) {
     }).then((response) =>
         response.json()).then((data) => {
             if (data[0] = "succes") {
-                // location.href = "mainpage.html"
+                location.href = "mainpage.html"
                 console.log("Succes")
             } else {
                 alert("failed")

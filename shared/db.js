@@ -105,7 +105,7 @@ function createProfile(payload) {
     return new Promise(async (resolve, reject) => {
         // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
-        interest2 = @interest2, interest3 = @interest3, university = @university WHERE id = @id`
+        interest2 = @interest2, interest3 = @interest3, university = @university WHERE email = @email`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -113,7 +113,7 @@ function createProfile(payload) {
             }
         });
         
-        request.addParameter('id', TYPES.VarChar, payload.id)
+        request.addParameter('email', TYPES.VarChar, payload.email)
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
         request.addParameter('gender', TYPES.VarChar, payload.gender)
@@ -148,8 +148,8 @@ function selectProfile(email) {
         });
         request.addParameter('email', TYPES.VarChar, email)
         request.on('row', (colomns) => {
-            let usersName = colomns[5].value
-            resolve(usersName)
+            let id = colomns[0].value
+            resolve(id)
         });
         connection.execSql(request)
     })
