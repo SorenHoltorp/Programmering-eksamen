@@ -27,9 +27,8 @@ form.addEventListener('submit', function (e) {
     var interest3 = document.getElementById("interest3").value
     var universityL = document.getElementById("university").value 
     var university = universityL.toUpperCase();
-    var email = document.getElementById("email").value 
-    
-    
+
+    let usernameToken = localStorage.getItem('token');    
 
     fetch("http://localhost:7071/api/setupProfile", {
         method: 'PUT',
@@ -41,10 +40,10 @@ form.addEventListener('submit', function (e) {
             interest1: interest1,
             interest2: interest2,
             interest3: interest3,
-            email: email
         }),
         headers: {
-            "Content-Type": "application/json; charset-UTF-8"
+            "Content-Type": "application/json; charset-UTF-8",
+            authentication: usernameToken
         }
     }).then((response) =>
         response.json()).then((data) => {

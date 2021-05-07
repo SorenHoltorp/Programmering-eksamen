@@ -45,7 +45,8 @@ async function get(context, req){
 async function put(context, req){
     try{
         let payload = req.body
-        await db.createProfile(payload)
+        let usernameToken = req.headers.authentication
+        await db.createProfile(payload, usernameToken)
         console.log(payload)
        
         context.res = {

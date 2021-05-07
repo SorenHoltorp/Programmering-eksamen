@@ -1,6 +1,6 @@
 const { Connection, Request, TYPES} = require('tedious');
 const config = require('./config.json');
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
@@ -99,8 +99,24 @@ function login(email) {
 module.exports.login = login
 
 
+const privateKey = 'secret-key';
+
+function safeJWT(input) {
+    let token = input;
+    let result;
+    result = jwt.verify(token, privateKey, { algorithm: 'HS256' }, (err, decoded) => {
+        if (err) {
+            console.log('jwt decoding error')
+        } else {
+            return decoded
+        }
+    })
+    console.log("i just decoded this: " + result)
+    return result;
+};
+
 // Funktion til at oprette brugerens profil i databasen
-function createProfile(payload) {
+function createProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
         // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
@@ -111,8 +127,8 @@ function createProfile(payload) {
                 console.log(err)
             }
         });
-        
-        request.addParameter('email', TYPES.VarChar, payload.email)
+
+        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
         request.addParameter('gender', TYPES.VarChar, payload.gender)
