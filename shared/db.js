@@ -100,9 +100,11 @@ module.exports.login = login
 
 
 // Funktion til at oprette brugerens profil i databasen
-function createProfile(payload) {
+function createProfile(id, name, age, gender, interest1, interest2, interest3, university) {
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
+        // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
+        const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
+        interest2 = @interest2, interest3 = @interest3, university = @university WHERE id = @id`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -110,13 +112,14 @@ function createProfile(payload) {
             }
         });
         
-        request.addParameter('name', TYPES.VarChar, payload.name)
-        request.addParameter('age', TYPES.SmallInt, payload.age)
-        request.addParameter('gender', TYPES.VarChar, payload.gender)
-        request.addParameter('interest1', TYPES.VarChar, payload.interest1)
-        request.addParameter('interest2', TYPES.VarChar, payload.interest2)
-        request.addParameter('interest3', TYPES.VarChar, payload.interest3)
-        request.addParameter('university', TYPES.VarChar, payload.university)
+        request.addParameter('id', TYPES.Int, id)
+        request.addParameter('name', TYPES.VarChar, name)
+        request.addParameter('age', TYPES.SmallInt, age)
+        request.addParameter('gender', TYPES.VarChar, gender)
+        request.addParameter('interest1', TYPES.VarChar, interest1)
+        request.addParameter('interest2', TYPES.VarChar, interest2)
+        request.addParameter('interest3', TYPES.VarChar, interest3)
+        request.addParameter('university', TYPES.VarChar, university)
 
 
         request.on('requestCompleted', (row) => {

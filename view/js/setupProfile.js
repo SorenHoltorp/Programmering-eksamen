@@ -29,7 +29,7 @@ form.addEventListener('submit', function (e) {
     
 
     fetch("http://localhost:7071/api/setupProfile", {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({
             name: name,
             age: age,
