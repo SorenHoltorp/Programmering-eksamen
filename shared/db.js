@@ -26,7 +26,7 @@ module.exports.startDb = startDb
 // Funktion til at oprette bruger i databasen
 function insert(payload) {
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password, id) VALUES (@username, @email, @password, @id)`
+        const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
