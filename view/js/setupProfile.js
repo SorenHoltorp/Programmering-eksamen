@@ -25,7 +25,8 @@ form.addEventListener('submit', function (e) {
     var interest1 = document.getElementById("interest1").value
     var interest2 = document.getElementById("interest2").value
     var interest3 = document.getElementById("interest3").value
-    var university = document.getElementById("university").value 
+    var universityL = document.getElementById("university").value 
+    var university = universityL.toUpperCase();
     var email = document.getElementById("email").value 
     
     
