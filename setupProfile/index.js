@@ -31,8 +31,9 @@ async function get(context, req){
     try{
         let email = req.body.email;
         let user = await db.selectProfile(email)
+        console.log(user)
         context.res = {
-            body: user
+            body: ["user"]
         };
     } catch(error){
         context.res = {
@@ -45,8 +46,12 @@ async function get(context, req){
 async function put(context, req){
     try{
         let payload = req.body
+<<<<<<< HEAD
         let usernameToken = req.headers.authentication
         await db.createProfile(payload, usernameToken)
+=======
+        await db.setupProfile(payload)
+>>>>>>> 817564ab8d0e27dafdfed26736cc74e25c6a6a8b
         console.log(payload)
        
         context.res = {

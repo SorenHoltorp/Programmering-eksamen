@@ -116,7 +116,11 @@ function safeJWT(input) {
 };
 
 // Funktion til at oprette brugerens profil i databasen
+<<<<<<< HEAD
 function createProfile(payload, emailToken) {
+=======
+function setupProfile(payload) {
+>>>>>>> 817564ab8d0e27dafdfed26736cc74e25c6a6a8b
     return new Promise(async (resolve, reject) => {
         // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
@@ -138,18 +142,18 @@ function createProfile(payload, emailToken) {
         request.addParameter('university', TYPES.VarChar, payload.university)
 
         request.on('requestCompleted', (row) => {
-            resolve('user inserted', row)
+            resolve('Profile Inserted', row)
         });
         connection.execSql(request)
     });
 
 }
-module.exports.createProfile = createProfile
+module.exports.setupProfile = setupProfile
 
 
 function selectProfile(email) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
+        const sql = `SELECT name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -160,8 +164,26 @@ function selectProfile(email) {
         });
         request.addParameter('email', TYPES.VarChar, email)
         request.on('row', (colomns) => {
-            let id = colomns[0].value
-            resolve(id)
+            
+            let name = colomns[5].value
+            let age = colomns[6].value
+            let gender = colomns[7].value
+            let interest1 = colomns[8].value
+            let interest2 = colomns[9].value
+            let interest3 = colomns[10].value
+            let university = colomns[11].value
+
+            let user = [
+                name, 
+                age,
+                gender,
+                interest1,
+                interest2,
+                interest3,
+                university
+            ]
+        
+            resolve(user)
         });
         connection.execSql(request)
     })
