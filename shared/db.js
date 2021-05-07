@@ -116,11 +116,7 @@ function safeJWT(input) {
 };
 
 // Funktion til at oprette brugerens profil i databasen
-<<<<<<< HEAD
 function createProfile(payload, emailToken) {
-=======
-function setupProfile(payload) {
->>>>>>> 817564ab8d0e27dafdfed26736cc74e25c6a6a8b
     return new Promise(async (resolve, reject) => {
         // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
@@ -148,7 +144,7 @@ function setupProfile(payload) {
     });
 
 }
-module.exports.setupProfile = setupProfile
+module.exports.createProfile = createProfile
 
 
 function selectProfile(email) {
