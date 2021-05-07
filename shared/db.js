@@ -131,9 +131,9 @@ function createProfile(payload) {
 module.exports.createProfile = createProfile
 
 
-function selectProfile(name) {
+function selectProfile(email) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE name = @name`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -142,9 +142,10 @@ function selectProfile(name) {
                 reject({message: 'User does not exits'})
             }
         });
-        request.addParameter('name', TYPES.VarChar, name)
+        request.addParameter('email', TYPES.VarChar, email)
         request.on('row', (colomns) => {
-            resolve(colomns)
+            let usersName = colomns[5].value
+            resolve(usersName)
         });
         connection.execSql(request)
     })
