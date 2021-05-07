@@ -40,7 +40,6 @@ function insert(payload) {
 
 
         request.on('requestCompleted', (row) => {
-            console.log('User inserted', row);
             resolve('user inserted', row)
         });
         connection.execSql(request)
@@ -122,13 +121,10 @@ function createProfile(payload) {
         request.addParameter('interest3', TYPES.VarChar, payload.interest3)
         request.addParameter('university', TYPES.VarChar, payload.university)
 
-
         request.on('requestCompleted', (row) => {
-            console.log('Profile created', row);
-            resolve('Profile created', row)
+            resolve('user inserted', row)
         });
         connection.execSql(request)
-    
     });
 
 }

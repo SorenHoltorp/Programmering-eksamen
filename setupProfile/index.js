@@ -46,7 +46,7 @@ async function put(context, req){
     try{
         let payload = req.body
         await db.createProfile(payload)
-        console.log(user, payload)
+        console.log(payload)
        
         context.res = {
             body: ["succes"]
