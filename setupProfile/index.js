@@ -31,8 +31,9 @@ async function get(context, req){
     try{
         let email = req.body.email;
         let user = await db.selectProfile(email)
+        console.log(user)
         context.res = {
-            body: user
+            body: ["user"]
         };
     } catch(error){
         context.res = {
@@ -45,7 +46,7 @@ async function get(context, req){
 async function put(context, req){
     try{
         let payload = req.body
-        await db.createProfile(payload)
+        await db.setupProfile(payload)
         console.log(payload)
        
         context.res = {
