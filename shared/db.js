@@ -1,6 +1,7 @@
 const { Connection, Request, TYPES} = require('tedious');
 const config = require('./config.json');
 const jwt = require("jsonwebtoken");
+const safeJWT = require("../middleware/Jwt")
 const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
@@ -95,25 +96,8 @@ function login(email) {
     connection.execSql(request)
     })
 }
-
 module.exports.login = login
 
-
-const privateKey = 'secret-key';
-
-function safeJWT(input) {
-    let token = input;
-    let result;
-    result = jwt.verify(token, privateKey, { algorithm: 'HS256' }, (err, decoded) => {
-        if (err) {
-            console.log('jwt decoding error')
-        } else {
-            return decoded
-        }
-    })
-    console.log("i just decoded this: " + result)
-    return result;
-};
 
 // Funktion til at oprette brugerens profil i databasen
 function createProfile(payload, emailToken) {
@@ -128,6 +112,7 @@ function createProfile(payload, emailToken) {
             }
         });
 
+        //her bruges middleware (jwt)
         request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
