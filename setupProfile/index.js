@@ -42,14 +42,13 @@ async function get(context, req){
     }
 }
 
-async function post(context, req){
+async function put(context, req){
     try{
         let payload = req.body
         await db.createProfile(payload)
         console.log(payload)
        
         context.res = {
-            updatedUser,
             body: ["succes"]
         }
     } catch(error){
