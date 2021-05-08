@@ -1,7 +1,5 @@
 const db = require('../shared/db');
 const jwt = require('jsonwebtoken');
-const bcrypt = require("bcryptjs");
-const setupProfile = require('../setupProfile');
 
 const privateKey = 'secret-key';
 

@@ -1,4 +1,4 @@
-const { Connection, Request, TYPES} = require('tedious');
+const { Connection, Request, TYPES } = require('tedious');
 const config = require('./config.json');
 const jwt = require("jsonwebtoken");
 const safeJWT = require("../middleware/Jwt")
@@ -6,13 +6,13 @@ const bcrypt = require("bcryptjs");
 
 var connection = new Connection(config);
 
-function startDb(){
+function startDb() {
     return new Promise((resolve, reject) => {
         connection.on('connect', (err) => {
-            if (err){
+            if (err) {
                 console.log('Connection failed')
                 reject(err)
-                throw(err);
+                throw (err);
             } else {
                 console.log('Connected')
                 resolve();
@@ -29,12 +29,12 @@ function insert(payload) {
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
-            if (err){
+            if (err) {
                 reject(err)
                 console.log(err)
             }
         });
-        
+
         request.addParameter('id', TYPES.Int, payload.id)
         request.addParameter('username', TYPES.VarChar, payload.username)
         request.addParameter('email', TYPES.VarChar, payload.email)
@@ -45,7 +45,7 @@ function insert(payload) {
             resolve('user inserted', row)
         });
         connection.execSql(request)
-    
+
     });
 
 }
@@ -55,11 +55,11 @@ function select(username) {
     return new Promise((resolve, reject) => {
         const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE username = @username`;
         const request = new Request(sql, (err, rowcount) => {
-            if (err){
+            if (err) {
                 reject(err)
                 console.log(err)
-            } else if (rowcount == 0){
-                reject({message: 'User does not exits'})
+            } else if (rowcount == 0) {
+                reject({ message: 'User does not exits' })
             }
         });
         request.addParameter('username', TYPES.VarChar, username)
@@ -75,26 +75,26 @@ module.exports.select = select
 
 function login(email) {
     return new Promise((resolve, reject) => {
-        
+
         const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
-            if(err) {
+            if (err) {
                 reject(err)
                 console.log(reject)
             } else if (rowcount == 0) {
-                reject({message: 'User does not exist'})
+                reject({ message: 'User does not exist' })
             }
         });
-    
-    request.addParameter('email', TYPES.VarChar, email)
 
-    //bcrypt.compareSync(password, hash); // true
-    
-    request.on('row', (colomns) => {
-        resolve(colomns)
-        console.log('Db login function succeeded')
-    });
-    connection.execSql(request)
+        request.addParameter('email', TYPES.VarChar, email)
+
+        //bcrypt.compareSync(password, hash); // true
+
+        request.on('row', (colomns) => {
+            resolve(colomns)
+            console.log('Db login function succeeded')
+        });
+        connection.execSql(request)
     })
 }
 module.exports.login = login
@@ -111,13 +111,12 @@ function setupProfile(payload) {
         VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_id)
         END`
         const request = new Request(sql, (err) => {
-            if (err){
+            if (err) {
                 reject(err)
                 console.log(err)
             }
         });
 
-        //her bruges middleware (jwt)
         request.addParameter('users_id', TYPES.Int, payload.usersId)
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
@@ -141,7 +140,7 @@ function deleteProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
         const sql = `DELETE  profile FROM [datingapplication].[tbl_profile] WHERE email = @email`
         const request = new Request(sql, (err) => {
-            if (err){
+            if (err) {
                 reject(err)
                 console.log(err)
             }
@@ -159,21 +158,21 @@ function deleteProfile(payload, emailToken) {
 module.exports.deleteProfile = deleteProfile
 
 
-function selectProfile(emailToken) {
-    console.log("selectProfile function has been activated. Getting ID from database.")
+function getUserID(emailToken) {
+    console.log("getUserID function has been activated. Getting ID from database.")
 
     return new Promise((resolve, reject) => {
         const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
-            if (err){
+            if (err) {
                 reject(err)
                 console.log(err)
-            } else if (rowcount == 0){
-                reject({message: 'User does not exits'})
+            } else if (rowcount == 0) {
+                reject({ message: 'User does not exits' })
             }
         });
         request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
-    
+
         request.on('row', (colomns) => {
             let id = colomns[0].value
             resolve(id)
@@ -181,5 +180,57 @@ function selectProfile(emailToken) {
         connection.execSql(request)
     })
 }
+module.exports.getUserID = getUserID;
 
-module.exports.selectProfile = selectProfile
+
+function getProfileID(emailToken) {
+    console.log("getProfileID function has been activated. Getting ID from database.")
+
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE email = @email`;
+        const request = new Request(sql, (err, rowcount) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            } else if (rowcount == 0) {
+                reject({ message: 'Profile does not exits' })
+            }
+        });
+        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
+
+        request.on('row', (colomns) => {
+            let id = colomns[0].value
+            resolve(id)
+        });
+        connection.execSql(request)
+    })
+}
+module.exports.getProfileID = getProfileID;
+
+
+function addLike(profileID, likedUserID) {
+    return new Promise(async (resolve, reject) => {
+        console.log("addLike function has been activated. Adding like to database.");
+
+        const sql = `INSERT INTO [datingapplication].[tbl_likes] (profile_id, likedProfile_id) 
+        VALUES (@profile_id, @likedProfile_id)`
+
+        const request = new Request(sql, (err) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            }
+        });
+
+        request.addParameter('profile_id', TYPES.Int, profileID);
+        request.addParameter('likedProfile_id', TYPES.Int, likedUserID);
+
+        request.on('requestCompleted', (row) => {
+            resolve('Like Inserted', row)
+        });
+        connection.execSql(request)
+    });
+}
+module.exports.addlike = addLike;
+
+

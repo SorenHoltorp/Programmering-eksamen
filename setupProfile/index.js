@@ -33,7 +33,7 @@ module.exports = async function (context, req) {
 async function getid(context, req){
     try{
         let usernameToken = req.headers.authentication
-        let userid = await db.selectProfile(usernameToken)
+        let userid = await db.getUserID(usernameToken)
         context.res = {
             body: [userid]
         };
