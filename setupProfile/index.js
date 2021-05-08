@@ -16,8 +16,8 @@ module.exports = async function (context, req) {
         case 'PATCH':
             await patch(context, req);
             break;
-        case 'PUT':
-            await put(context, req);
+        case 'POST':
+            await post(context, req);
             break;
         case 'DELETE':
             await remove(context, req);
@@ -63,7 +63,7 @@ async function patch(context, req){
 }
 
 
-async function remove(context, req){
+async function post(context, req){
     try{
         let payload = req.body
         await db.deleteProfile(payload)
