@@ -102,8 +102,8 @@ module.exports.login = login
 // Funktion til at oprette brugerens profil i databasen
 function createProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university) 
-        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
+        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email) 
+        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -112,7 +112,7 @@ function createProfile(payload, emailToken) {
         });
 
         //her bruges middleware (jwt)
-        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
+        request.addParameter('users_email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
         request.addParameter('gender', TYPES.VarChar, payload.gender)
