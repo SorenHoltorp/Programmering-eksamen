@@ -159,11 +159,11 @@ function deleteProfile(payload, emailToken) {
 module.exports.deleteProfile = deleteProfile
 
 
-function selectProfile(payload) {
+function selectProfile(emailToken) {
     console.log("selectProfile function has been activated. Getting ID from database.")
 
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE users_id = @users_id`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -172,7 +172,7 @@ function selectProfile(payload) {
                 reject({message: 'User does not exits'})
             }
         });
-        request.addParameter('users_id', TYPES.VarChar, payload.users_id)
+        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
     
         request.on('row', (colomns) => {
             let id = colomns[0].value
