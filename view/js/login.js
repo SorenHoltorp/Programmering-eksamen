@@ -30,13 +30,17 @@ login.addEventListener('submit', function(e) {
     }).then((response) => 
         response.json()).then((data) => {
         console.log(data[0])
+        if(data[0] == "Correct password"){
+        location.href = "mainpage.html";
         if (localStorage.getItem('token')) {
             localStorage.removeItem('token');
-            location.href = "mainpage.html";
             localStorage.setItem('token', data[1]);
         } else {
             localStorage.setItem('token', data[1]);
         }
+    } else if (data[0] == "Incorrect password") {
+        alert("Wrong password.")
+    }
     }).catch((err) => {
         console.log(err)
     })
