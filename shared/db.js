@@ -105,7 +105,7 @@ function setupProfile(payload, emailToken) {
         const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_profile] WHERE users_email = @users_email)
         BEGIN 
         UPDATE [datingapplication].[tbl_profile] SET name = @name, age = @age, gender = @gender, interest1 = @interest1,
-        interest2 = @interest2, interest3 = @interest3, university = @university WHERE users_email = @users_email
+        interest2 = @interest2, interest3 = @interest3, university = @university, users_id = @users_id WHERE users_email = @users_email
         END ELSE BEGIN 
         INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email, users_id) 
         VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email, @users_id)
