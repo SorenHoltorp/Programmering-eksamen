@@ -140,7 +140,7 @@ module.exports.setupProfile = setupProfile
 // Funktion til at slette brugerens profil i databasen
 function deleteProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `DELETE  name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`
+        const sql = `DELETE  profile FROM [datingapplication].[tbl_profile] WHERE email = @email`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -150,14 +150,6 @@ function deleteProfile(payload, emailToken) {
 
         //her bruges middleware (jwt)
         request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
-        request.addParameter('name', TYPES.VarChar, payload.name)
-        request.addParameter('age', TYPES.SmallInt, payload.age)
-        request.addParameter('gender', TYPES.VarChar, payload.gender)
-        request.addParameter('interest1', TYPES.VarChar, payload.interest1)
-        request.addParameter('interest2', TYPES.VarChar, payload.interest2)
-        request.addParameter('interest3', TYPES.VarChar, payload.interest3)
-        request.addParameter('university', TYPES.VarChar, payload.university)
-
         request.on('requestCompleted', (row) => {
             resolve('Profile Deleted', row)
         });
