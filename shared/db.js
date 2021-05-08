@@ -35,6 +35,7 @@ function insert(payload) {
             }
         });
         
+        request.addParameter('id', TYPES.Int, payload.id)
         request.addParameter('username', TYPES.VarChar, payload.username)
         request.addParameter('email', TYPES.VarChar, payload.email)
         request.addParameter('password', TYPES.VarChar, payload.password)
@@ -102,8 +103,8 @@ module.exports.login = login
 // Funktion til at oprette brugerens profil i databasen
 function createProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email) 
-        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email)`
+        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email, users_id) 
+        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email, @users_id)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -112,6 +113,7 @@ function createProfile(payload, emailToken) {
         });
 
         //her bruges middleware (jwt)
+        request.addParameter('users_id', TYPES.Int, payload.users_id)
         request.addParameter('users_email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
