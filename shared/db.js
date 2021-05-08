@@ -118,7 +118,7 @@ function setupProfile(payload, emailToken) {
         });
 
         //her bruges middleware (jwt)
-        request.addParameter('users_id', TYPES.Int, payload.usersID)
+        request.addParameter('users_id', TYPES.Int, payload.usersId)
         request.addParameter('users_email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
@@ -127,8 +127,6 @@ function setupProfile(payload, emailToken) {
         request.addParameter('interest2', TYPES.VarChar, payload.interest2)
         request.addParameter('interest3', TYPES.VarChar, payload.interest3)
         request.addParameter('university', TYPES.VarChar, payload.university)
-
-        console.log("igot here111")
 
         request.on('requestCompleted', (row) => {
             resolve('Profile Inserted', row)

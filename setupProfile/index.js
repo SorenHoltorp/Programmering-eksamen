@@ -34,7 +34,6 @@ async function getid(context, req){
     try{
         let usernameToken = req.headers.authentication
         let userid = await db.selectProfile(usernameToken)
-        console.log(userid)
         context.res = {
             body: [userid]
         };
@@ -50,9 +49,9 @@ async function getid(context, req){
 async function patch(context, req){
     try{
         let payload = req.body
+
         let usernameToken = req.headers.authentication
         await db.setupProfile(payload, usernameToken)
-        console.log(payload)
        
         context.res = {
             body: ["succes"]
