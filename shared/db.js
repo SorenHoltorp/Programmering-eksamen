@@ -99,12 +99,17 @@ function login(email) {
 }
 module.exports.login = login
 
-
 // Funktion til at oprette brugerens profil i databasen
-function createProfile(payload, emailToken) {
+function setupProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email, users_id) 
-        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email, @users_id)`
+        const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_profile] WHERE users_email = @users_email)
+        BEGIN 
+        UPDATE [datingapplication].[tbl_profile] SET name = @name, age = @age, gender = @gender, interest1 = @interest1,
+        interest2 = @interest2, interest3 = @interest3, university = @university WHERE users_email = @users_email
+        END ELSE BEGIN 
+        INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email, users_id) 
+        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email, @users_id)
+        END`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -130,13 +135,12 @@ function createProfile(payload, emailToken) {
     });
 
 }
-module.exports.createProfile = createProfile
-
+module.exports.setupProfile = setupProfile
 
 // Funktion til at slette brugerens profil i databasen
 function deleteProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `DELETE  name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`
+        const sql = `DELETE  profile FROM [datingapplication].[tbl_profile] WHERE email = @email`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -146,14 +150,6 @@ function deleteProfile(payload, emailToken) {
 
         //her bruges middleware (jwt)
         request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
-        request.addParameter('name', TYPES.VarChar, payload.name)
-        request.addParameter('age', TYPES.SmallInt, payload.age)
-        request.addParameter('gender', TYPES.VarChar, payload.gender)
-        request.addParameter('interest1', TYPES.VarChar, payload.interest1)
-        request.addParameter('interest2', TYPES.VarChar, payload.interest2)
-        request.addParameter('interest3', TYPES.VarChar, payload.interest3)
-        request.addParameter('university', TYPES.VarChar, payload.university)
-
         request.on('requestCompleted', (row) => {
             resolve('Profile Deleted', row)
         });

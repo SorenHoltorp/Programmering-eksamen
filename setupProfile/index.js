@@ -13,8 +13,8 @@ module.exports = async function (context, req) {
         case 'GET':
             await getid(context, req);
             break;
-        case 'POST':
-            await post(context, req);
+        case 'PATCH':
+            await patch(context, req);
             break;
         case 'PUT':
             await put(context, req);
@@ -46,11 +46,12 @@ async function getid(context, req){
     }
 }
 
-async function post(context, req){
+
+async function patch(context, req){
     try{
         let payload = req.body
         let usernameToken = req.headers.authentication
-        await db.createProfile(payload, usernameToken)
+        await db.setupProfile(payload, usernameToken)
         console.log(payload)
        
         context.res = {
@@ -63,6 +64,7 @@ async function post(context, req){
         }
     }
 }
+
 
 async function remove(context, req){
     try{
