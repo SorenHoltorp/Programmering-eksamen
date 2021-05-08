@@ -100,7 +100,7 @@ function login(email) {
 module.exports.login = login
 
 // Funktion til at oprette brugerens profil i databasen
-function setupProfile(payload, emailToken) {
+function setupProfile(payload) {
     return new Promise(async (resolve, reject) => {
         const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id)
         BEGIN 

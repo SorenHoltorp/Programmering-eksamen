@@ -55,8 +55,7 @@ form.addEventListener('submit', function (e) {
                     usersId: data[0]
                 }),
                 headers: {
-                    "Content-Type": "application/json; charset-UTF-8",
-                    authentication: usernameToken
+                    "Content-Type": "application/json; charset-UTF-8"
                 }
             }).then((response) =>
                 response.json()).then((data) => {
