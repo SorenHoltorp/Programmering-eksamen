@@ -19,6 +19,9 @@ module.exports = async function (context, req) {
         case 'PUT':
             await put(context, req);
             break;
+        case 'DELETE':
+            await delete(context, req);
+            break;
         default:
             context.res = {
                 body: "Method not accepted"
@@ -60,3 +63,5 @@ async function put(context, req){
         }
     }
 }
+
+

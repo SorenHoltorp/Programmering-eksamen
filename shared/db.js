@@ -132,6 +132,39 @@ function createProfile(payload, emailToken) {
 module.exports.createProfile = createProfile
 
 
+// Funktion til at oprette brugerens profil i databasen
+function deleteProfile(payload, emailToken) {
+    return new Promise(async (resolve, reject) => {
+        // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
+        const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
+        interest2 = @interest2, interest3 = @interest3, university = @university WHERE email = @email`
+        const request = new Request(sql, (err) => {
+            if (err){
+                reject(err)
+                console.log(err)
+            }
+        });
+
+        //her bruges middleware (jwt)
+        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
+        request.addParameter('name', TYPES.VarChar, payload.name)
+        request.addParameter('age', TYPES.SmallInt, payload.age)
+        request.addParameter('gender', TYPES.VarChar, payload.gender)
+        request.addParameter('interest1', TYPES.VarChar, payload.interest1)
+        request.addParameter('interest2', TYPES.VarChar, payload.interest2)
+        request.addParameter('interest3', TYPES.VarChar, payload.interest3)
+        request.addParameter('university', TYPES.VarChar, payload.university)
+
+        request.on('requestCompleted', (row) => {
+            resolve('Profile Inserted', row)
+        });
+        connection.execSql(request)
+    });
+
+}
+module.exports.deleteProfile = deleteProfile
+
+
 function selectProfile(email) {
     return new Promise((resolve, reject) => {
         const sql = `SELECT name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`;
