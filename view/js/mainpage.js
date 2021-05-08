@@ -15,12 +15,12 @@ function logout() {
 }
 
 function getProfileInformation() {
-    let userToken = localStorage.getItem('token');
-    fetch('http://localhost:7071/api/setupProfile', {
+    let usernameToken = localStorage.getItem('token');
+    fetch('http://localhost:7071/api/homePage', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            authentication: userToken
+            authentication: usernameToken
         }
     }).then(res => res.json()).then(data => {
         if (data[0] == 'profileInformation succeded') {
@@ -40,9 +40,13 @@ function getProfileInformation() {
                 age.innerHTML = informationArray[i].age;
                 var gender = newRow.insertCell(2);
                 gender.innerHTML = informationArray[i].gender;
-                var interests = newRow.insertCell(3);
-                interests.innerHTML = informationArray[i].interests;
-                var university = newRow.insertCell(4);
+                var interest1 = newRow.insertCell(3);
+                interest1.innerHTML = informationArray[i].interest1;
+                var interest2 = newRow.insertCell(4);
+                interest2.innerHTML = informationArray[i].interest2;
+                var interest3 = newRow.insertCell(5);
+                interest3.innerHTML = informationArray[i].interest3;
+                var university = newRow.insertCell(6);
                 university.innerHTML = informationArray[i].university;
 
             }

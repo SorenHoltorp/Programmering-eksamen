@@ -51,9 +51,9 @@ function insert(payload) {
 }
 module.exports.insert = insert
 
-function select(username) {
+function selectProfile(users_id) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE username = @username`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = users_id`;
         const request = new Request(sql, (err, rowcount) => {
             if (err) {
                 reject(err)
@@ -62,16 +62,15 @@ function select(username) {
                 reject({ message: 'User does not exits' })
             }
         });
-        request.addParameter('username', TYPES.VarChar, username)
+        request.addParameter('users_id', TYPES.Int, users_id)
         request.on('row', (colomns) => {
-            let id = colomns[0].value
-            resolve(id)
+            resolve(colomns)
         });
         connection.execSql(request)
     })
 }
 
-module.exports.select = select
+module.exports.selectProfile = selectProfile
 
 function login(email) {
     return new Promise((resolve, reject) => {
