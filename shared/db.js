@@ -102,8 +102,8 @@ module.exports.login = login
 // Funktion til at oprette brugerens profil i databasen
 function createProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
-        interest2 = @interest2, interest3 = @interest3, university = @university WHERE email = @email`
+        const sql = `INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university) 
+        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)

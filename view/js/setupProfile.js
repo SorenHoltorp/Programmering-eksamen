@@ -31,7 +31,7 @@ form.addEventListener('submit', function (e) {
     let usernameToken = localStorage.getItem('token');    
 
     fetch("http://localhost:7071/api/setupProfile", {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify({
             name: name,
             age: age,
