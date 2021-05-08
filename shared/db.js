@@ -162,7 +162,7 @@ module.exports.deleteProfile = deleteProfile
 
 function selectProfile(email) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -174,13 +174,13 @@ function selectProfile(email) {
         request.addParameter('email', TYPES.VarChar, email)
         request.on('row', (colomns) => {
             
-            let name = colomns[5].value
-            let age = colomns[6].value
-            let gender = colomns[7].value
-            let interest1 = colomns[8].value
-            let interest2 = colomns[9].value
-            let interest3 = colomns[10].value
-            let university = colomns[11].value
+            let name = colomns[1].value
+            let age = colomns[2].value
+            let gender = colomns[3].value
+            let interest1 = colomns[4].value
+            let interest2 = colomns[5].value
+            let interest3 = colomns[6].value
+            let university = colomns[7].value
 
             let user = [
                 name, 
