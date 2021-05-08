@@ -102,7 +102,6 @@ module.exports.login = login
 // Funktion til at oprette brugerens profil i databasen
 function createProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
         const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
         interest2 = @interest2, interest3 = @interest3, university = @university WHERE email = @email`
         const request = new Request(sql, (err) => {
@@ -132,12 +131,10 @@ function createProfile(payload, emailToken) {
 module.exports.createProfile = createProfile
 
 
-// Funktion til at oprette brugerens profil i databasen
+// Funktion til at slette brugerens profil i databasen
 function deleteProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        // const sql = `INSERT INTO [datingapplication].[tbl_users] (name, age, gender, interest1, interest2, interest3, university) VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university)`
-        const sql = `UPDATE [datingapplication].[tbl_users] SET name = @name, age = @age, gender = @gender, interest1 = @interest1, 
-        interest2 = @interest2, interest3 = @interest3, university = @university WHERE email = @email`
+        const sql = `DELETE  name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`
         const request = new Request(sql, (err) => {
             if (err){
                 reject(err)
@@ -156,7 +153,7 @@ function deleteProfile(payload, emailToken) {
         request.addParameter('university', TYPES.VarChar, payload.university)
 
         request.on('requestCompleted', (row) => {
-            resolve('Profile Inserted', row)
+            resolve('Profile Deleted', row)
         });
         connection.execSql(request)
     });

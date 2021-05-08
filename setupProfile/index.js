@@ -20,7 +20,7 @@ module.exports = async function (context, req) {
             await put(context, req);
             break;
         case 'DELETE':
-            await delete(context, req);
+            await remove(context, req);
             break;
         default:
             context.res = {
@@ -64,4 +64,21 @@ async function put(context, req){
     }
 }
 
+async function remove(context, req){
+    try{
+        let payload = req.body
+        let usernameToken = req.headers.authentication
+        await db.deleteProfile(payload, usernameToken)
+        console.log(payload)
+       
+        context.res = {
+            body: ["succes"]
+        }
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: error.message
+        }
+    }
+}
 
