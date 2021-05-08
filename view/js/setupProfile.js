@@ -43,7 +43,7 @@ form.addEventListener('submit', function (e) {
 
             //poster profilen med id
             fetch("http://localhost:7071/api/setupProfile", {
-                method: 'POST',
+                method: 'PATCH',
                 body: JSON.stringify({
                     name: name,
                     age: age,
