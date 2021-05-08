@@ -102,13 +102,13 @@ module.exports.login = login
 // Funktion til at oprette brugerens profil i databasen
 function setupProfile(payload, emailToken) {
     return new Promise(async (resolve, reject) => {
-        const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_profile] WHERE users_email = @users_email)
+        const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id)
         BEGIN 
         UPDATE [datingapplication].[tbl_profile] SET name = @name, age = @age, gender = @gender, interest1 = @interest1,
-        interest2 = @interest2, interest3 = @interest3, university = @university, users_id = @users_id WHERE users_email = @users_email
+        interest2 = @interest2, interest3 = @interest3, university = @university WHERE users_id = @users_id
         END ELSE BEGIN 
-        INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_email, users_id) 
-        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_email, @users_id)
+        INSERT INTO [datingapplication].[tbl_profile] (name, age, gender, interest1, interest2, interest3, university, users_id) 
+        VALUES (@name, @age, @gender, @interest1, @interest2, @interest3, @university, @users_id)
         END`
         const request = new Request(sql, (err) => {
             if (err){
@@ -119,7 +119,6 @@ function setupProfile(payload, emailToken) {
 
         //her bruges middleware (jwt)
         request.addParameter('users_id', TYPES.Int, payload.usersId)
-        request.addParameter('users_email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
         request.addParameter('gender', TYPES.VarChar, payload.gender)
