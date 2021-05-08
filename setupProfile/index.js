@@ -16,8 +16,8 @@ module.exports = async function (context, req) {
         case 'PATCH':
             await patch(context, req);
             break;
-        case 'PUT':
-            await put(context, req);
+        case 'POST':
+            await post(context, req);
             break;
         case 'DELETE':
             await remove(context, req);
