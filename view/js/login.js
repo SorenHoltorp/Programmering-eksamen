@@ -29,10 +29,10 @@ login.addEventListener('submit', function(e) {
         }
     }).then((response) => 
         response.json()).then((data) => {
-        location.href = "mainpage.html";
         console.log(data[0])
         if (localStorage.getItem('token')) {
             localStorage.removeItem('token');
+            location.href = "mainpage.html";
             localStorage.setItem('token', data[1]);
         } else {
             localStorage.setItem('token', data[1]);
