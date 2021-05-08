@@ -59,13 +59,14 @@ function getProfileInformation() {
 
 //sends request to server, and generates user based table
 function getPossibleLikes() {
-    let usernameToken = localStorage.getItem('token');
+    let emailToken = localStorage.getItem('token');
     fetch('http://localhost:7071/getPossibleLikes', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            authentication: usernameToken
+            authentication: emailToken
         }
+        //Hertil!
     }).then(res => res.json()).then(data => {
         if (data[0] == 'possibleMatches succeded') {
             let personsArray;

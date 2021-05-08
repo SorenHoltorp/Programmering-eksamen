@@ -1,13 +1,42 @@
+const db = require('../shared/db');
+
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
-
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
-
-    context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
-    };
+    context.log('JavaScript HTTP trigger function processed a request.')
+    try {
+        await db.startDb(); //start db connection
+    } catch (error) {
+        console.log("Error connecting to the database", error.message)
+    }
+    
+    switch (req.method) {
+        case 'GET':
+            await getPossibleLikes(context, req);
+            break;
+        default:
+            context.res = {
+                body: "Please use get"
+            };
+            break
+    }
 }
+
+//Get users ecxept itself
+async function getPossibleLikes(context, req){
+    try{
+        //let emailToken = req.headers.authentication
+        let profileID = req.body.profileID;
+        let possibleLikes = await db.getPossibleLikes(profileID);
+
+        
+
+
+        context.res = {
+            body: [possibleLikes]
+        };
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: `No profile - ${error.message}`
+        };
+    };
+};

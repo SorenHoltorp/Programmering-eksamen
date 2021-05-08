@@ -238,3 +238,38 @@ function addLike(profileID, likedUserID) {
 module.exports.addlike = addLike;
 
 
+function getPossibleLikes(profileID) {
+    return new Promise(async (resolve, reject) => {
+        console.log("getPossibleLikes function has been activated. Getting likes from the database.");
+
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE id != @id`
+
+        const request = new Request(sql, (err) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            }
+        });
+
+        console.log(profileID)
+
+        request.addParameter('id', TYPES.VarChar, profileID)
+
+        let array = [];
+        let count = 0;
+
+        request.on('row', (colomns) => {
+            if(count == 5){
+                resolve(array)
+            } else {
+                count += 1;
+            array.push(colomns[1].value);
+
+            console.log("The array is now: " + array)
+            console.log(count)
+            }
+        });
+        connection.execSql(request)
+    })
+}
+module.exports.getPossibleLikes = getPossibleLikes;
