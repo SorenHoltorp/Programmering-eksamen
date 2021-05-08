@@ -128,6 +128,8 @@ function setupProfile(payload, emailToken) {
         request.addParameter('interest3', TYPES.VarChar, payload.interest3)
         request.addParameter('university', TYPES.VarChar, payload.university)
 
+        console.log("igot here111")
+
         request.on('requestCompleted', (row) => {
             resolve('Profile Inserted', row)
         });
