@@ -136,9 +136,12 @@ function setupProfile(payload) {
 module.exports.setupProfile = setupProfile
 
 // Funktion til at slette brugerens profil i databasen
-function deleteProfile(payload, emailToken) {
+function deleteProfile(payload) {
     return new Promise(async (resolve, reject) => {
-        const sql = `DELETE  profile FROM [datingapplication].[tbl_profile] WHERE email = @email`
+        const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id)
+        BEGIN
+        DELETE FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id
+        END`
         const request = new Request(sql, (err) => {
             if (err) {
                 reject(err)
@@ -147,7 +150,8 @@ function deleteProfile(payload, emailToken) {
         });
 
         //her bruges middleware (jwt)
-        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
+        request.addParameter('users_id', TYPES.Int, payload.usersId)
+
         request.on('requestCompleted', (row) => {
             resolve('Profile Deleted', row)
         });

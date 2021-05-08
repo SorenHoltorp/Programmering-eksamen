@@ -11,14 +11,14 @@
         Mainpage
     </h1>
     <a href="setupProfile.html" class="setupProfile-nav">Setup Profile</a>
-    <a href="login.html" class="logout-nav" onclick="logout()">Log out</a>
+    <a href="deleteProfile.html" class="deleteProfile-nav">Delete Profile</a>
+    <a href="login.html" class="logout-nav" onclick="logout()">Log Out</a>
 
     <main>
         <h2>Your Profile Information</h2>
         <form>
             <button type="button" id="matchesB" onclick="getProfileInformation()">Profile Information</button>
-        </form>
-        <table id="table1">
+            <table id="table1">
             <tr id="headers">
                 <th>Name</th>
                 <th>Age</th>
@@ -26,6 +26,8 @@
                 <th>Interests</th>
                 <th>University</th>
             </tr>
+        </form>
+        
         </table>
         <br> <br>
 
