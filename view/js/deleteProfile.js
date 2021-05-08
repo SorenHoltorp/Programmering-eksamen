@@ -15,7 +15,7 @@ form.addEventListener('submit', function (e) {
 
     //henter første id
     fetch("http://localhost:7071/api/setupProfile", {
-        method: 'get',
+        method: 'GET',
         headers: {
             "Content-Type": "application/json; charset-UTF-8",
             authentication: usernameToken
@@ -25,7 +25,10 @@ form.addEventListener('submit', function (e) {
         console.log('Getting ID was a succes. ID is: ' + data[0])
 
         fetch("http://localhost:7071/api/setupProfile", {
-            method: 'post',
+            method: 'DELETE',
+            ody: JSON.stringify({
+                usersId: data[0]
+            }),
             headers: {
                 "Content-Type": "applicattion/json; charset-UTF-8"
             }
@@ -40,9 +43,6 @@ form.addEventListener('submit', function (e) {
         }).catch((err) => {
             console.log(err)
         })
-
-    }).catch((err) => {
-        console.log(err)
     })
 
 
