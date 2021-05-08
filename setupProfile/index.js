@@ -11,7 +11,7 @@ module.exports = async function (context, req) {
     
     switch (req.method) {
         case 'GET':
-            await get(context, req);
+            await getid(context, req);
             break;
         case 'POST':
             await post(context, req);
@@ -30,13 +30,13 @@ module.exports = async function (context, req) {
     }
 }
 
-async function get(context, req){
+async function getid(context, req){
     try{
-        let email = req.body.email;
-        let user = await db.selectProfile(email)
-        console.log(user)
+        let usernameToken = req.headers.authentication
+        let userid = await db.selectProfile(usernameToken)
+        console.log(userid)
         context.res = {
-            body: ["user"]
+            body: [userid]
         };
     } catch(error){
         context.res = {

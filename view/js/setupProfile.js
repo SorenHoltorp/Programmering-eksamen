@@ -25,35 +25,54 @@ form.addEventListener('submit', function (e) {
     var interest1 = document.getElementById("interest1").value
     var interest2 = document.getElementById("interest2").value
     var interest3 = document.getElementById("interest3").value
-    var universityL = document.getElementById("university").value 
+    var universityL = document.getElementById("university").value
     var university = universityL.toUpperCase();
 
-    let usernameToken = localStorage.getItem('token');    
+    let usernameToken = localStorage.getItem('token');
 
+    //henter først id
     fetch("http://localhost:7071/api/setupProfile", {
-        method: 'POST',
-        body: JSON.stringify({
-            name: name,
-            age: age,
-            gender: gender,
-            university: university,
-            interest1: interest1,
-            interest2: interest2,
-            interest3: interest3,
-        }),
+        method: 'get',
         headers: {
             "Content-Type": "application/json; charset-UTF-8",
             authentication: usernameToken
         }
     }).then((response) =>
         response.json()).then((data) => {
-            if (data[0] = "succes") {
-                location.href = "mainpage.html"
-                console.log("Succes")
-            } else {
-                alert("failed")
-            }
+            console.log("getting id was a succes. id is: " + data[0])
+
+            //poster profilen med id
+            fetch("http://localhost:7071/api/setupProfile", {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: name,
+                    age: age,
+                    gender: gender,
+                    university: university,
+                    interest1: interest1,
+                    interest2: interest2,
+                    interest3: interest3,
+                    usersId: data[0]
+                }),
+                headers: {
+                    "Content-Type": "application/json; charset-UTF-8",
+                    authentication: usernameToken
+                }
+            }).then((response) =>
+                response.json()).then((data) => {
+                    if (data[0] = "succes") {
+                        location.href = "mainpage.html"
+                        console.log("Succes")
+                    } else {
+                        alert("failed")
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                })
         }).catch((err) => {
             console.log(err)
         })
+
+
+
 })

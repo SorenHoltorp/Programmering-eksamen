@@ -113,7 +113,7 @@ function createProfile(payload, emailToken) {
         });
 
         //her bruges middleware (jwt)
-        request.addParameter('users_id', TYPES.Int, payload.users_id)
+        request.addParameter('users_id', TYPES.Int, payload.usersID)
         request.addParameter('users_email', TYPES.VarChar, safeJWT(emailToken))
         request.addParameter('name', TYPES.VarChar, payload.name)
         request.addParameter('age', TYPES.SmallInt, payload.age)
@@ -164,9 +164,11 @@ function deleteProfile(payload, emailToken) {
 module.exports.deleteProfile = deleteProfile
 
 
-function selectProfile(email) {
+function selectProfile(emailToken) {
+    console.log("selectProfile function has been activated. Getting ID from database.")
+
     return new Promise((resolve, reject) => {
-        const sql = `SELECT name, age, gender, interest1, interest2, interest3, university FROM [datingapplication].[tbl_users] WHERE email = @email`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = @email`;
         const request = new Request(sql, (err, rowcount) => {
             if (err){
                 reject(err)
@@ -175,28 +177,11 @@ function selectProfile(email) {
                 reject({message: 'User does not exits'})
             }
         });
-        request.addParameter('email', TYPES.VarChar, email)
+        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
+    
         request.on('row', (colomns) => {
-            
-            let name = colomns[5].value
-            let age = colomns[6].value
-            let gender = colomns[7].value
-            let interest1 = colomns[8].value
-            let interest2 = colomns[9].value
-            let interest3 = colomns[10].value
-            let university = colomns[11].value
-
-            let user = [
-                name, 
-                age,
-                gender,
-                interest1,
-                interest2,
-                interest3,
-                university
-            ]
-        
-            resolve(user)
+            let id = colomns[0].value
+            resolve(id)
         });
         connection.execSql(request)
     })
