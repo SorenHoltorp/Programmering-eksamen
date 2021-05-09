@@ -66,6 +66,7 @@ async function patch(context, req){
 async function remove(context, req){
     try{
         let payload = req.body
+        console.log(payload)
         await db.deleteProfile(payload)
         console.log(payload)
        

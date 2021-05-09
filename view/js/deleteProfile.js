@@ -26,7 +26,7 @@ form.addEventListener('submit', function (e) {
 
         fetch("http://localhost:7071/api/setupProfile", {
             method: 'DELETE',
-            ody: JSON.stringify({
+            body: JSON.stringify({
                 usersId: data[0]
             }),
             headers: {
@@ -35,7 +35,6 @@ form.addEventListener('submit', function (e) {
         }).then((response) => 
         response.json()).then((data) => {
             if (data[0] = "succes") {
-                location.href = "mainpage.html"
                 console.log("Succes")
             } else {
                 alert("Failed")
