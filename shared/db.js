@@ -145,8 +145,8 @@ function deleteProfile(payload) {
             }
         });
 
-        request.addParameter('users_id', TYPES.Int, payload.users_id)
-        console.log("here")
+        request.addParameter('users_id', TYPES.Int, payload.usersId)
+        console.log("here and users id is:  " + payload.usersId)
 
         request.on('requestCompleted', (row) => {
             resolve('Profile Deleted', row)
