@@ -209,6 +209,7 @@ function likeUser(likedUserID) {
                     }).then(res => res.json()).then(data => {
                         if (data[0] == 'succes') {
                             alert('Pretty one! \nLets hope you will be liked aswell.');
+                            console.log(data[1])
                             /* potential match function
                             for (var i = 0; i < data[1].length; i++) {
                                 if (data[4] == data[1][i]) {

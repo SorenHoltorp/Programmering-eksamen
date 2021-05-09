@@ -236,8 +236,17 @@ function addLike(profileID, likedUserID) {
         request.addParameter('profile_id', TYPES.Int, profileID);
         request.addParameter('likedProfile_id', TYPES.Int, likedUserID);
 
-        request.on('requestCompleted', (row) => {
-            resolve('Like Inserted', row)
+        request.on('row', (colomns) => {
+        
+               
+            
+            let like = {
+                id: colomns[0].value,
+                profileID: colomns[1].value,
+                likeProfileID: colomns[2].value,
+            }
+            array.push(like);
+            resolve(array)
         });
         connection.execSql(request)
     });
