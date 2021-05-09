@@ -137,8 +137,7 @@ module.exports.setupProfile = setupProfile
 // Funktion til at slette brugerens profil i databasen
 function deleteProfile(payload) {
     return new Promise(async (resolve, reject) => {
-        const sql = `DELETE FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id 
-        AND DELETE FROM [datingapplication].[tbl_likes] WHERE profile_id = profile_id`
+        const sql = `DELETE FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id`
         const request = new Request(sql, (err) => {
             if (err) {
                 reject(err)
