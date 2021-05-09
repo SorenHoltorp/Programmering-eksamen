@@ -36,6 +36,7 @@ form.addEventListener('submit', function (e) {
         response.json()).then((data) => {
             if (data[0] = "succes") {
                 console.log("Succes")
+                location.href = "mainpage.html"
             } else {
                 alert("Failed")
             }
