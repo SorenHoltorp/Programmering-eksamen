@@ -279,3 +279,30 @@ function getPossibleLikes(profileID) {
     })
 }
 module.exports.getPossibleLikes = getPossibleLikes;
+
+
+function adminLogin(email) {
+    return new Promise((resolve, reject) => {
+
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = admin@admin.com`;
+        const request = new Request(sql, (err, rowcount) => {
+            if (err) {
+                reject(err)
+                console.log(reject)
+            } else if (rowcount == 0) {
+                reject({ message: 'User does not exist' })
+            }
+        });
+
+        request.addParameter('email', TYPES.VarChar, email)
+
+        //bcrypt.compareSync(password, hash); // true
+
+        request.on('row', (colomns) => {
+            resolve(colomns)
+            console.log('Db login function succeeded')
+        });
+        connection.execSql(request)
+    })
+}
+module.exports.adminLogin = adminLogin
