@@ -9,7 +9,7 @@ module.exports = async function (context, req) {
     }
     
     switch (req.method) {
-        case 'GET':
+        case 'PUT':
             await getid(context, req);
             break;
         case 'PATCH':
@@ -26,10 +26,10 @@ module.exports = async function (context, req) {
 //Get the ID from the Database based on the token.
 async function getid(context, req){
     try{
-        let usernameToken = req.headers.authentication
-        let userid = await db.getProfileID(usernameToken)
+        let userID = req.body.userID
+        let profileID = await db.getProfileID(userID)
         context.res = {
-            body: [userid]
+            body: [profileID]
         };
     } catch(error){
         context.res = {

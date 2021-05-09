@@ -28,14 +28,14 @@ form.addEventListener('submit', function (e) {
     var universityL = document.getElementById("university").value
     var university = universityL.toUpperCase();
 
-    let usernameToken = localStorage.getItem('token');
+    let emailToken = localStorage.getItem('token');
 
     //henter først id
     fetch("http://localhost:7071/api/setupProfile", {
         method: 'get',
         headers: {
             "Content-Type": "application/json; charset-UTF-8",
-            authentication: usernameToken
+            authentication: emailToken
         }
     }).then((response) =>
         response.json()).then((data) => {

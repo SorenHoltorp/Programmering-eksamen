@@ -9,7 +9,7 @@ module.exports = async function (context, req) {
     }
     
     switch (req.method) {
-        case 'GET':
+        case 'PUT':
             await getPossibleLikes(context, req);
             break;
         default:
@@ -26,17 +26,14 @@ async function getPossibleLikes(context, req){
         //let emailToken = req.headers.authentication
         let profileID = req.body.profileID;
         let possibleLikes = await db.getPossibleLikes(profileID);
-
-        
-
-
         context.res = {
-            body: [possibleLikes]
+            body: ['possibleMatches succeded', possibleLikes]
         };
+
     } catch(error){
         context.res = {
             status: 400,
-            body: `No profile - ${error.message}`
+            body: `getPossibleLikes failed - ${error.message}`
         };
     };
 };

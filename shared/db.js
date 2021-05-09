@@ -183,11 +183,11 @@ function getUserID(emailToken) {
 module.exports.getUserID = getUserID;
 
 
-function getProfileID(emailToken) {
+function getProfileID(userID) {
     console.log("getProfileID function has been activated. Getting ID from database.")
 
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE email = @email`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id`;
         const request = new Request(sql, (err, rowcount) => {
             if (err) {
                 reject(err)
@@ -196,7 +196,7 @@ function getProfileID(emailToken) {
                 reject({ message: 'Profile does not exits' })
             }
         });
-        request.addParameter('email', TYPES.VarChar, safeJWT(emailToken))
+        request.addParameter('users_id', TYPES.VarChar, userID)
 
         request.on('row', (colomns) => {
             let id = colomns[0].value
@@ -246,7 +246,6 @@ function getPossibleLikes(profileID) {
                 console.log(err)
             }
         });
-
         console.log(profileID)
 
         request.addParameter('id', TYPES.VarChar, profileID)
@@ -259,7 +258,17 @@ function getPossibleLikes(profileID) {
                 resolve(array)
             } else {
                 count += 1;
-            array.push(colomns[1].value);
+            let oneUser = {
+                profileID: colomns[0].value,
+                name: colomns[1].value,
+                age: colomns[2].value,
+                gender: colomns[3].value,
+                interest1: colomns[4].value,
+                interest2: colomns[5].value,
+                interest3: colomns[6].value,
+                university: colomns[7].value,
+            }
+            array.push(oneUser);
 
             console.log("The array is now: " + array)
             console.log(count)
