@@ -252,13 +252,11 @@ function getPossibleLikes(profileID) {
         request.addParameter('id', TYPES.VarChar, profileID)
 
         let array = [];
-        let count = 0;
 
         request.on('row', (colomns) => {
-            if(count == 5){
+            if(array.length == 5){
                 resolve(array)
             } else {
-                count += 1;
             let oneUser = {
                 profileID: colomns[0].value,
                 name: colomns[1].value,
@@ -270,9 +268,6 @@ function getPossibleLikes(profileID) {
                 university: colomns[7].value,
             }
             array.push(oneUser);
-
-            console.log("The array is now: " + array)
-            console.log(count)
             }
         });
         connection.execSql(request)
