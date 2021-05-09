@@ -1,6 +1,6 @@
 function checkIfLoggedIn() {
     if(localStorage.getItem('token')){
-        location.href = "mainpage.html"
+        location.href = "admin.html"
         alert('You are allready logged in. Press OK to continue.');
     } else {
         return;
@@ -14,7 +14,7 @@ login.addEventListener('submit', function(e) {
     var password = document.getElementById("password").value
   
 
-    fetch("http://localhost:7071/api/admin", {
+    fetch("http://localhost:7071/api/loginAdmin", {
         method: 'POST',
         body: JSON.stringify({
             email: email,

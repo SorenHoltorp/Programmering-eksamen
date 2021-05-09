@@ -5,3 +5,9 @@ function checkIfLoggedIn() {
         location.href = "login.html";
     }
 };
+
+function logout() {
+    localStorage.removeItem('token');
+    location.href = "login.html";
+    alert("Bye, bye!");
+}

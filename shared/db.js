@@ -289,7 +289,7 @@ module.exports.getPossibleLikes = getPossibleLikes;
 function adminLogin(email) {
     return new Promise((resolve, reject) => {
 
-        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = admin@admin.com`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_users] WHERE email = 'admin@admin.com'`;
         const request = new Request(sql, (err, rowcount) => {
             if (err) {
                 reject(err)
