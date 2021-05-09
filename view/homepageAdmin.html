@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+</head>
+<body onload="checkIfLoggedIn()">
+    <h1>
+        Admin Mainpage
+    </h1>
+    
+    <a href="setupProfileAdmin.html" class="setupProfile-nav">Setup Profile</a>
+    <a href="deleteProfileAdmin.html" class="deleteProfile-nav">Delete Profile</a>
+    <a href="login.html" class="logout-nav" onclick="logout()">Log Out</a>
+    <main>
+        <h2>List over Users</h2>
+        <button type="button" id="tableB" onclick="getUsers()">Refresh</button>
+    <table id="users_tbl">
+        <tr id="headers">
+            <th>ID</th> 
+        </tr>
+    </table>
+
+
+    </main>
+
+
+    
+    <script src="js/homepageAdmin.js"></script>
+</body>
+</html>

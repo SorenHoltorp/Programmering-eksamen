@@ -1,6 +1,6 @@
 function checkIfLoggedIn() {
     if(localStorage.getItem('token')){
-        location.href = "admin.html"
+        location.href = "homepageAdmin.html"
         alert('You are allready logged in. Press OK to continue.');
     } else {
         return;
@@ -27,7 +27,7 @@ login.addEventListener('submit', function(e) {
         response.json()).then((data) => {
         console.log(data[0])
         if(data[0] == "Correct password"){
-        location.href = "admin.html";
+        location.href = "homepageAdmin.html";
         if (localStorage.getItem('token')) {
             localStorage.removeItem('token');
             localStorage.setItem('token', data[1]);

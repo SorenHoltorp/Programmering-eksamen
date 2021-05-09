@@ -20,7 +20,7 @@ function startDb() {
         })
         connection.connect();
     })
-}
+} 
 module.exports.sqlConnection = connection
 module.exports.startDb = startDb
 
@@ -311,3 +311,26 @@ function adminLogin(email) {
     })
 }
 module.exports.adminLogin = adminLogin
+
+function getUsersAdmin(userID) {
+    return new Promise(async (resolve, reject) => {
+        const sql = `SELECT COUNT (users_id) FROM [datingapplication].[tbl_profile]`
+
+        const request = new Request(sql, (err) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            }
+        });
+        console.log(userID)
+
+        request.addParameter('users_id', TYPES.VarChar, userID)
+
+        request.on('row', (colomns) => {
+           resolve(colomns)
+           console.log('Amount of users')
+        });
+        connection.execSql(request)
+    })
+}
+module.exports.getUsersAdmin = getUsersAdmin;
