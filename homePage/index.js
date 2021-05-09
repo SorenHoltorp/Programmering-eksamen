@@ -1,5 +1,4 @@
 const db = require('../shared/db');
-const requireLogin = require('../middleware/Jwt')
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
@@ -10,8 +9,8 @@ module.exports = async function (context, req) {
     }
     
     switch (req.method) {
-        case 'GET':
-            await get(context, req);
+        case 'PUT':
+            await getProfile(context, req);
             break;
         case 'POST':
             await post(context, req);
@@ -24,13 +23,14 @@ module.exports = async function (context, req) {
     }
 }
 
-async function get(context, req){
+async function getProfile(context, req){
     try{
-        let users_id = req.query.users_id;
-        let profile = await db.selectProfile(users_id)
-        console.log(profile)
+        let userID = req.body.userID;
+        let profile = await db.selectProfile(userID)
+        let profileInArr = [];
+        profileInArr.push(profile)
         context.res = {
-            body: profile,
+            body: ["succes", profileInArr]
         }
     } catch(error) {
         context.res = {

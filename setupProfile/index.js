@@ -62,7 +62,6 @@ async function patch(context, req){
     }
 }
 
-
 async function remove(context, req){
     try{
         let payload = req.body

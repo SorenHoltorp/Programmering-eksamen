@@ -15,26 +15,24 @@
     <a href="login.html" class="logout-nav" onclick="logout()">Log Out</a>
 
     <main>
-        <h2>Your Profile Information</h2>
-        <form>
-            <button type="button" id="matchesB" onclick="getProfileInformation()">Profile Information</button>
+        <h2>Your Profile</h2>
+
+            <button type="button" id="profileB" onclick="getProfileInformation()">Refresh</button>
             <table id="profiletable">
             <tr id="headers">
                 <th>Name</th>
                 <th>Age</th>
                 <th>Gender</th>
-                <th>Interest</th>
-                <th>Interest</th>
-                <th>Interest</th>
+                <th>Interests</th>
+                <th></th>
+                <th></th>
                 <th>University</th>
             </tr>
-        </form>
         
         </table>
         <br> <br>
 
         <h2>Possible matches</h2>
-        <form class="noRefresh">
             <button type="button" id="tableB" onclick="getPossibleLikes()">Refresh</button>
         <table id="liketbl">
             <tr id="headers">
@@ -45,8 +43,7 @@
                 <th></th>
                 <th></th>
                 <th>University</th>
-                <th>Like</th>
-            
+                <th>Like</th> 
             </tr>
         </table>
 

@@ -15,53 +15,70 @@ function logout() {
 }
 
 
-//VIRKER IKKE LIGE NU. MEN SKAL HAVE ALT INFORMATION OM ENS EGEN BRUGER
+//Get your own profile
 function getProfileInformation() {
-    let usernameToken = localStorage.getItem('token');
-    fetch('http://localhost:7071/api/homePage', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            authentication: usernameToken
-        }
-    }).then(res => res.json()).then(data => {
-        if (data[0] == 'profileInformation succeded') {
-            let informationArray;
-            informationArray = data[1];
-            let table = document.getElementById('table1');
-            rowCount = table.rows.length;
-            for (var i = 1; i < rowCount; i++) {
-                table.deleteRow(1)
-            }
-            for (var i = 1; i < informationArray.length; i++) {
-                console.log('Rows' + i + 1)
-                var newRow = table.insertRow(i + 1);
-                var name = newRow.insertCell(0);
-                name.innerHTML = informationArray[i].name;
-                var age = newRow.insertCell(1);
-                age.innerHTML = informationArray[i].age;
-                var gender = newRow.insertCell(2);
-                gender.innerHTML = informationArray[i].gender;
-                var interest1 = newRow.insertCell(3);
-                interest1.innerHTML = informationArray[i].interest1;
-                var interest2 = newRow.insertCell(4);
-                interest2.innerHTML = informationArray[i].interest2;
-                var interest3 = newRow.insertCell(5);
-                interest3.innerHTML = informationArray[i].interest3;
-                var university = newRow.insertCell(6);
-                university.innerHTML = informationArray[i].university;
+    let emailToken = localStorage.getItem('token');
 
-            }
-        } else {
-            alert('Please add profile information')
+    //henter først user_id
+    fetch("http://localhost:7071/api/setupProfile", {
+        method: 'get',
+        headers: {
+            "Content-Type": "application/json; charset-UTF-8",
+            authentication: emailToken
         }
-    })
+    }).then((response) =>
+        response.json()).then((data) => {
+            console.log("getting user_id was a succes. id is: " + data[0])
+            let userID = data[0];
+
+
+            fetch('http://localhost:7071/api/homePage', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userID: userID
+                })
+            }).then(res => res.json()).then(data => {
+                if (data[0] == 'succes') {
+                    console.log("getting profile was a succes.")
+                    let informationArray;
+                    informationArray = data[1];
+                    let table = document.getElementById('profiletable');
+                    rowCount = table.rows.length;
+                    for (var i = 1; i < rowCount; i++) {
+                        table.deleteRow(1)
+                    }
+                    for (var i = 0; i < informationArray.length; i++) {
+                        var newRow = table.insertRow(i + 1);
+                        var name = newRow.insertCell(0);
+                        name.innerHTML = informationArray[i].name;
+                        var age = newRow.insertCell(1);
+                        age.innerHTML = informationArray[i].age;
+                        var gender = newRow.insertCell(2);
+                        gender.innerHTML = informationArray[i].gender;
+                        var interest1 = newRow.insertCell(3);
+                        interest1.innerHTML = informationArray[i].interest1;
+                        var interest2 = newRow.insertCell(4);
+                        interest2.innerHTML = informationArray[i].interest2;
+                        var interest3 = newRow.insertCell(5);
+                        interest3.innerHTML = informationArray[i].interest3;
+                        var university = newRow.insertCell(6);
+                        university.innerHTML = informationArray[i].university;
+                    }
+                } else {
+                    alert('Please add profile information')
+                }
+            })
+                .catch((err) => {
+                    console.log(err);
+                })
+        })
         .catch((err) => {
             console.log(err);
         })
 }
-
-
 
 //sends request to server, and generates user based table. LETS GO LIKES
 function getPossibleLikes() {

@@ -53,7 +53,7 @@ module.exports.insert = insert
 
 function selectProfile(users_id) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = users_id`;
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id`;
         const request = new Request(sql, (err, rowcount) => {
             if (err) {
                 reject(err)
@@ -64,7 +64,17 @@ function selectProfile(users_id) {
         });
         request.addParameter('users_id', TYPES.Int, users_id)
         request.on('row', (colomns) => {
-            resolve(colomns)
+            let profile = {
+                profileID: colomns[0].value,
+                name: colomns[1].value,
+                age: colomns[2].value,
+                gender: colomns[3].value,
+                interest1: colomns[4].value,
+                interest2: colomns[5].value,
+                interest3: colomns[6].value,
+                university: colomns[7].value
+            }
+            resolve(profile)
         });
         connection.execSql(request)
     })
