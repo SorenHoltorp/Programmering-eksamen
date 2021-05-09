@@ -6,7 +6,7 @@ function checkIfLoggedIn() {
     }
 };
 
-var form = document.getElementById("setupProfile")
+var form = document.getElementById("setupProfileAdmin")
 
 form.addEventListener('submit', function (e) {
     e.preventDefault()
@@ -19,21 +19,9 @@ form.addEventListener('submit', function (e) {
     var interest3 = document.getElementById("interest3").value
     var universityL = document.getElementById("university").value
     var university = universityL.toUpperCase();
+    var usersId = document.getElementById("usersId").value
 
-    let emailToken = localStorage.getItem('token');
-
-    //henter først id
-    fetch("http://localhost:7071/api/setupProfile", {
-        method: 'get',
-        headers: {
-            "Content-Type": "application/json; charset-UTF-8",
-            authentication: emailToken
-        }
-    }).then((response) =>
-        response.json()).then((data) => {
-            console.log("getting id was a succes. id is: " + data[0])
-
-            //poster profilen med id
+    
             fetch("http://localhost:7071/api/setupProfile", {
                 method: 'PATCH',
                 body: JSON.stringify({
@@ -44,7 +32,7 @@ form.addEventListener('submit', function (e) {
                     interest1: interest1,
                     interest2: interest2,
                     interest3: interest3,
-                    usersId: data[0]
+                    usersId: usersId
                 }),
                 headers: {
                     "Content-Type": "application/json; charset-UTF-8"
@@ -52,7 +40,7 @@ form.addEventListener('submit', function (e) {
             }).then((response) =>
                 response.json()).then((data) => {
                     if (data[0] = "succes") {
-                        location.href = "mainpage.html"
+                        location.href = "homepageAdmin.html"
                         console.log("Succes")
                     } else {
                         alert("failed")
@@ -60,10 +48,5 @@ form.addEventListener('submit', function (e) {
                 }).catch((err) => {
                     console.log(err)
                 })
-        }).catch((err) => {
-            console.log(err)
-        })
-
-
 
 })
