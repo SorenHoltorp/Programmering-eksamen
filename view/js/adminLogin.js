@@ -14,7 +14,7 @@ login.addEventListener('submit', function(e) {
     var password = document.getElementById("password").value
   
 
-    fetch("http://localhost:7071/api/adminLogin", {
+    fetch("http://localhost:7071/api/admin", {
         method: 'POST',
         body: JSON.stringify({
             email: email,
