@@ -1,4 +1,4 @@
-//Validates if u are allready logged in
+//Validates if u are already logged in
 function checkIfLoggedIn() {
     if(localStorage.getItem('token')){
         location.href = "mainpage.html"
