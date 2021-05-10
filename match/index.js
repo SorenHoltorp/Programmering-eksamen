@@ -31,7 +31,29 @@ async function compareLike(context, req){
         let likedProfileID = req.body.likedProfileID
 
         let result = await db.comparingLikes(profileID, likedProfileID, likeID)
+    
+        context.res = {
+            body: [result]
+        };
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: `No match - ${error.message}`
+        };
+    };
+};
 
+async function insertMatch(context, req){
+    try{
+        let firstLikeID = req.body.firstLikeID
+        let secondLikeID = req.body.secondLikeID
+
+        let matchID = await db.insertMatch(firstLikeID, secondLikeID)
+        let result = {
+            status: "succes",
+            matchID: matchID
+        }
+        
         context.res = {
             body: [result]
         };

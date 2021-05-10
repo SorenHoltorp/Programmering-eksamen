@@ -367,7 +367,7 @@ module.exports.getLikeID = getLikeID;
 
 function comparingLikes(profileID, likedUserID, likeID) {
     return new Promise(async (resolve, reject) => {
-        console.log("insertMatch function has been activated. Comparing likes in the database.");
+        console.log("comparingLikes function has been activated. Comparing likes in the database.");
 
         const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @likedProfile_id AND likedProfile_id = @profile_id AND id != @like_id)
         BEGIN
@@ -392,7 +392,8 @@ function comparingLikes(profileID, likedUserID, likeID) {
             if(secondLikeID != likeID){
                 ifMatch = {
                     status: "yes", 
-                    secondLikeID: secondLikeID
+                    secondLikeID: secondLikeID,
+                    firstLikeID: likeID
                 }
             } else {
                 ifMatch = {
@@ -405,3 +406,30 @@ function comparingLikes(profileID, likedUserID, likeID) {
     });
 }
 module.exports.comparingLikes = comparingLikes;
+
+function insertMatch(firstLikeID, secondLikeID) {
+    return new Promise(async (resolve, reject) => {
+        console.log("insertMatch function has been activated. Adding match to database.");
+
+        const sql = `IF NOT EXISTS (SELECT * FROM [datingapplication].[tbl_matches] WHERE like_id1 = @like_id1 AND like_id2 = @like_id2)
+        BEGIN
+        INSERT INTO [datingapplication].[tbl_matches] (like_id1, like_id2) VALUES (@like_id1, @like_id2)
+        END`
+
+        const request = new Request(sql, (err) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            }
+        });
+        request.addParameter('like_id1', TYPES.Int, firstLikeID);
+        request.addParameter('like_id2', TYPES.Int, secondLikeID);
+        request.on('row', (colomns) => {
+            let matchID = colomns[0].value
+            console.log("succes!!! " + matchID)
+            resolve(matchID)
+        });
+        connection.execSql(request)
+    });
+}
+module.exports.insertMatch = insertMatch;
