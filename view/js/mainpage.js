@@ -207,9 +207,9 @@ function likeUser(likedProfileID) {
                             profileID: data[0]
                         })
                     }).then(res => res.json()).then(data => {
+                        console.log("adding like was a: " + data[0])
+                        console.log("For like, we have profile id : " + data[1] + ". And likedprofile id: " + data[2])
                         if (data[0] == 'succes') {
-                            alert('Pretty one! \nLets hope you will be liked aswell.');
-
                             fetch('http://localhost:7071/api/like', {
                                 method: 'POST',
                                 headers: {
@@ -220,8 +220,51 @@ function likeUser(likedProfileID) {
                                     profileID: data[1]
                                 })
                             }).then(res => res.json()).then(data => {
-                                let like = data
-                                console.log(like)
+                                let like = data[0]
+                                console.log("Like just added to database: " + like)
+
+                                fetch('http://localhost:7071/api/match', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        likeID: data[0],
+                                        profileID: data[1],
+                                        likedProfileID: data[2]
+                                    })
+                                }).then(res => res.json()).then(data => {
+                                    console.log(data)
+                                    if (data[0].status == "yes") {
+
+                                        fetch('http://localhost:7071/api/match', {
+                                            method: 'PATCH',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                likeID1: data[0].firstLikeID,
+                                                likeID2: data[0].secondLikeID
+                                            })
+                                        }).then(res => res.json()).then(data => {
+                                            console.log(data)
+                                            if (data[0].status = "succes"){
+                                                alert("congratz! You got a match!")
+                                            } else {
+                                                console.log("match error")
+                                            }
+                                        })
+                                                .catch((error) => {
+                                                    console.error('Error:', error);
+                                                });
+                                    } else if (data[0].status == "no") {
+                                        alert('Pretty one! \nLets hope you will be liked aswell.');
+                                    }
+                                })
+                                    .catch((error) => {
+                                        console.error('Error:', error);
+                                    });
+
                             })
                                 .catch((error) => {
                                     console.error('Error:', error);
