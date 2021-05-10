@@ -1,5 +1,5 @@
 const db = require('../shared/db');
-const bcrypt = require("bcryptjs")
+
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
