@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
     } catch (error) {
         console.log("Error connecting to the database", error.message)
     }
-    
+
     switch (req.method) {
         case 'PATCH':
             await insertMatch(context, req);
@@ -24,18 +24,18 @@ module.exports = async function (context, req) {
 }
 
 //Get the ID from the Database based on the token.
-async function compareLike(context, req){
-    try{
+async function compareLike(context, req) {
+    try {
         let likeID = req.body.likeID
         let profileID = req.body.profileID
         let likedProfileID = req.body.likedProfileID
 
         let result = await db.comparingLikes(profileID, likedProfileID, likeID)
-    
+
         context.res = {
             body: [result]
         };
-    } catch(error){
+    } catch (error) {
         context.res = {
             status: 400,
             body: `No match - ${error.message}`
@@ -43,8 +43,8 @@ async function compareLike(context, req){
     };
 };
 
-async function insertMatch(context, req){
-    try{
+async function insertMatch(context, req) {
+    try {
         let firstLikeID = req.body.firstLikeID
         let secondLikeID = req.body.secondLikeID
 
@@ -53,11 +53,11 @@ async function insertMatch(context, req){
             status: "succes",
             matchID: matchID
         }
-        
+
         context.res = {
             body: [result]
         };
-    } catch(error){
+    } catch (error) {
         context.res = {
             status: 400,
             body: `No match - ${error.message}`

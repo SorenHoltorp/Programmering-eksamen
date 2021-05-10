@@ -3,6 +3,7 @@ const config = require('./config.json');
 const jwt = require("jsonwebtoken");
 const safeJWT = require("../middleware/Jwt")
 const bcrypt = require("bcryptjs");
+const { request } = require('express');
 
 var connection = new Connection(config);
 
@@ -257,9 +258,11 @@ function getPossibleLikes(profileID) {
                 console.log(err)
             }
         });
-        console.log(profileID)
 
         request.addParameter('id', TYPES.VarChar, profileID)
+
+        console.log("consoling connectionstate:")
+        console.log(connection.state)
 
         let array = [];
 
@@ -336,32 +339,48 @@ function getUsersAdmin(userID) {
 module.exports.getUsersAdmin = getUsersAdmin;
 
 function getLikeID(profileID, likedProfileID) {
-    console.log("getLikeID function has been activated. Getting ID from database.")
+    try {
+        //Prøvede at lave connection.state.name om til loggedIn for at undgå fejl. Men dette laver blot en ny fejl.
+        if (connection.state.name !== "LoggedIn") {
+            setTimeout(getLikeID, 0);
+            console.log("connections.state.name was just changed from: " + connection.state.name)
+        } else {
 
-    return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @profile_id AND likedProfile_id = @likedProfile_id`;
-        const request = new Request(sql, (err, rowcount) => {
-            if (err) {
-                reject(err)
-                console.log(err)
-            } else if (rowcount == 0) {
-                reject({ message: 'Like does not exits' })
-            }
-        });
-        request.addParameter('profile_id', TYPES.Int, profileID)
-        request.addParameter('likedProfile_id', TYPES.Int, likedProfileID)
+            console.log("getLikeID function has been activated. Getting ID from database.")
 
-        request.on('row', (colomns) => {
+            return new Promise((resolve, reject) => {
+                const sql = `SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @profile_id AND likedProfile_id = @likedProfile_id`;
+                const request = new Request(sql, (err, rowcount) => {
+                    if (err) {
+                        reject(err)
+                        console.log(err)
+                    } else if (rowcount == 0) {
+                        reject({ message: 'Like does not exits' })
+                    }
+                })
 
-            let like = {
-                likeID: colomns[0].value,
-                profileID: profileID,
-                likedProfileID: likedProfileID
-            }
-            resolve(like)
-        });
-        connection.execSql(request)
-    })
+                request.addParameter('profile_id', TYPES.Int, profileID)
+                request.addParameter('likedProfile_id', TYPES.Int, likedProfileID)
+
+                console.log("consoling connectionstate:")
+                console.log("connections.state.name is now: " + connection.state.name)
+
+                request.on('row', (colomns) => {
+
+                    let like = {
+                        likeID: colomns[0].value,
+                        profileID: profileID,
+                        likedProfileID: likedProfileID
+                    }
+                    resolve(like)
+                })
+
+                connection.execSql(request)
+            })
+        }
+    } catch (err) {
+        throw (err)
+    }
 }
 module.exports.getLikeID = getLikeID;
 
@@ -389,15 +408,15 @@ function comparingLikes(profileID, likedUserID, likeID) {
         request.on('row', (colomns) => {
             let ifMatch;
             let secondLikeID = colomns[0].value
-            if(secondLikeID != likeID){
+            if (secondLikeID != likeID) {
                 ifMatch = {
-                    status: "yes", 
+                    status: "yes",
                     secondLikeID: secondLikeID,
                     firstLikeID: likeID
                 }
             } else {
                 ifMatch = {
-                    status: "no", 
+                    status: "no",
                 }
             }
             resolve(ifMatch)

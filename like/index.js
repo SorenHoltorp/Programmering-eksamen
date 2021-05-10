@@ -1,3 +1,4 @@
+const { Connection, ConnectionError } = require('tedious');
 const db = require('../shared/db');
 
 module.exports = async function (context, req) {
