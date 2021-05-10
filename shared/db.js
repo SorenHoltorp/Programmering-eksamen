@@ -415,19 +415,22 @@ function insertMatch(firstLikeID, secondLikeID) {
         BEGIN
         INSERT INTO [datingapplication].[tbl_matches] (like_id1, like_id2) VALUES (@like_id1, @like_id2)
         END`
-
+        console.log("i was here")
         const request = new Request(sql, (err) => {
             if (err) {
                 reject(err)
                 console.log(err)
             }
         });
+        console.log("i was heree")
         request.addParameter('like_id1', TYPES.Int, firstLikeID);
         request.addParameter('like_id2', TYPES.Int, secondLikeID);
-        request.on('row', (colomns) => {
-            let matchID = colomns[0].value
-            console.log("succes!!! " + matchID)
-            resolve(matchID)
+
+        request.on("row", (columns) => {
+            console.log("i was hereeee")
+            console.log(columns[0].value)
+            let match = "hell ya"
+            resolve(match)
         });
         connection.execSql(request)
     });

@@ -208,7 +208,7 @@ function likeUser(likedProfileID) {
                         })
                     }).then(res => res.json()).then(data => {
                         console.log("adding like was a: " + data[0])
-                        console.log("lets get like id. For this we have profile id : " + data[1] + ". And likeedprofile id: " + data[2])
+                        console.log("For like, we have profile id : " + data[1] + ". And likedprofile id: " + data[2])
                         if (data[0] == 'succes') {
                             fetch('http://localhost:7071/api/like', {
                                 method: 'POST',
@@ -248,11 +248,15 @@ function likeUser(likedProfileID) {
                                             })
                                         }).then(res => res.json()).then(data => {
                                             console.log(data)
-
+                                            if (data[0].status = "succes"){
+                                                alert("congratz! You got a match!")
+                                            } else {
+                                                console.log("match error")
+                                            }
+                                        })
                                                 .catch((error) => {
                                                     console.error('Error:', error);
                                                 });
-                                        })
                                     } else if (data[0].status == "no") {
                                         alert('Pretty one! \nLets hope you will be liked aswell.');
                                     }
