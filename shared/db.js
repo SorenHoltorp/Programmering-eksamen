@@ -236,7 +236,6 @@ function addLike(profileID, likedUserID) {
         });
         request.addParameter('profile_id', TYPES.Int, profileID);
         request.addParameter('likedProfile_id', TYPES.Int, likedUserID);
-
         request.on('row', (colomns) => {
             resolve("addLike suceeded.", colomns)
         });
@@ -365,3 +364,44 @@ function getLikeID(profileID, likedProfileID) {
     })
 }
 module.exports.getLikeID = getLikeID;
+
+function comparingLikes(profileID, likedUserID, likeID) {
+    return new Promise(async (resolve, reject) => {
+        console.log("insertMatch function has been activated. Comparing likes in the database.");
+
+        const sql = `IF EXISTS (SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @likedProfile_id AND likedProfile_id = @profile_id AND id != @like_id)
+        BEGIN
+            SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @likedProfile_id AND likedProfile_id = @profile_id AND id != @like_id  
+        END
+        ELSE
+            SELECT * FROM [datingapplication].[tbl_likes] WHERE id = @like_id`
+
+        const request = new Request(sql, (err) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            }
+        });
+        request.addParameter('profile_id', TYPES.Int, profileID);
+        request.addParameter('likedProfile_id', TYPES.Int, likedUserID);
+        request.addParameter('like_id', TYPES.Int, likeID);
+
+        request.on('row', (colomns) => {
+            let ifMatch;
+            let secondLikeID = colomns[0].value
+            if(secondLikeID != likeID){
+                ifMatch = {
+                    status: "yes", 
+                    secondLikeID: secondLikeID
+                }
+            } else {
+                ifMatch = {
+                    status: "no", 
+                }
+            }
+            resolve(ifMatch)
+        });
+        connection.execSql(request)
+    });
+}
+module.exports.comparingLikes = comparingLikes;

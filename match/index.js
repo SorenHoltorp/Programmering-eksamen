@@ -1,13 +1,44 @@
+const db = require('../shared/db');
+
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
-
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
-
-    context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
-    };
+    context.log('JavaScript HTTP trigger function processed a request.')
+    try {
+        await db.startDb(); //start db connection
+    } catch (error) {
+        console.log("Error connecting to the database", error.message)
+    }
+    
+    switch (req.method) {
+        case 'PATCH':
+            await insertMatch(context, req);
+            break;
+        case 'POST':
+            await compareLike(context, req);
+            break;
+        default:
+            context.res = {
+                body: "Please get or post"
+            };
+            break
+    }
 }
+
+//Get the ID from the Database based on the token.
+async function compareLike(context, req){
+    try{
+        let likeID = req.body.likeID
+        let profileID = req.body.profileID
+        let likedProfileID = req.body.likedProfileID
+
+        let result = await db.comparingLikes(profileID, likedProfileID, likeID)
+
+        context.res = {
+            body: [result]
+        };
+    } catch(error){
+        context.res = {
+            status: 400,
+            body: `No match - ${error.message}`
+        };
+    };
+};

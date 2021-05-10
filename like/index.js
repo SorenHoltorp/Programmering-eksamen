@@ -47,10 +47,9 @@ async function patchLike(context, req){
         let profileID = req.body.profileID;
         let likedProfileID = req.body.likedProfileID;
         let status = db.addlike(profileID, likedProfileID);
-        console.log(status)
 
         context.res = {
-            body: ["succes", profileID, likedProfileID]
+            body: ["succes", profileID, likedProfileID, status]
         };
     } catch(error) {
         context.res = {
