@@ -313,8 +313,9 @@ function adminLogin(email) {
 module.exports.adminLogin = adminLogin
 
 function getUsersAdmin(userID) {
+    console.log('Getting users')
     return new Promise(async (resolve, reject) => {
-        const sql = `SELECT COUNT (users_id) FROM [datingapplication].[tbl_profile]`
+        const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id`
 
         const request = new Request(sql, (err) => {
             if (err) {
@@ -326,9 +327,18 @@ function getUsersAdmin(userID) {
 
         request.addParameter('users_id', TYPES.VarChar, userID)
 
+        let array = [];
+
         request.on('row', (colomns) => {
-            resolve(colomns)
-            console.log('Amount of users')
+            if (array.length == 5) {
+                resolve(array)
+            } else {
+                let oneUser = {
+                    userID: colomns[0].value,
+                    name: colomns[1].value,
+                }
+                array.push(oneUser);
+            }
         });
         connection.execSql(request)
     })

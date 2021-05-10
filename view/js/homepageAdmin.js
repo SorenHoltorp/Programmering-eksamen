@@ -13,9 +13,9 @@ function logout() {
 }
 
 function getUsers() {
-    
     let emailToken = localStorage.getItem('token');
-    
+
+    //henter først user_id
     fetch("http://localhost:7071/api/setupProfile", {
         method: 'get',
         headers: {
@@ -26,7 +26,7 @@ function getUsers() {
         response.json()).then((data) => {
             console.log("getting user_id was a succes. id is: " + data[0])
             let userID = data[0];
-                fetch('http://localhost:7071/api/homepageAdmin', {
+            fetch('http://localhost:7071/api/homepageAdmin', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -48,6 +48,8 @@ function getUsers() {
                                 var newRow = table.insertRow(i + 1);
                                 var userID = newRow.insertCell(0);
                                 userID.innerHTML = personsArray[i].userID
+                                var name = newRow.insertCell(1)
+                                name.innerHTML = personsArray[i].name
                             }
                         } else {
                             alert('');

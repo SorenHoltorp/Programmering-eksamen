@@ -9,15 +9,16 @@
         Admin Mainpage
     </h1>
     
-    <a href="setupProfileAdmin.html" class="setupProfile-nav">Setup Profile</a>
-    <a href="deleteProfileAdmin.html" class="deleteProfile-nav">Delete Profile</a>
+    <a href="setupProfileAdmin.html" class="setupProfile-nav">Setup a Profile</a>
+    <a href="deleteProfileAdmin.html" class="deleteProfile-nav">Delete a Profile</a>
     <a href="login.html" class="logout-nav" onclick="logout()">Log Out</a>
     <main>
         <h2>List over Users</h2>
         <button type="button" id="tableB" onclick="getUsers()">Refresh</button>
     <table id="users_tbl">
         <tr id="headers">
-            <th>ID</th> 
+            <th>ID</th>
+            <th>Name</th> 
         </tr>
     </table>
 
