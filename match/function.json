@@ -6,9 +6,8 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "put",
-        "patch",
-        "post"
+        "post",
+        "patch"
       ]
     },
     {
