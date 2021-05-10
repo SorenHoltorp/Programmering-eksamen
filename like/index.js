@@ -14,7 +14,10 @@ module.exports = async function (context, req) {
             break;
         case 'PATCH':
             await patchLike(context, req);
-            break
+            break;
+        case 'POST':
+            await getLID(context, req);
+            break;
         default:
             context.res = {
                 body: "Please get or post"
@@ -42,13 +45,31 @@ async function getid(context, req){
 async function patchLike(context, req){
     try{
         let profileID = req.body.profileID;
-        let likedUserID = req.body.likedUserID;
-        let like = db.addlike(profileID, likedUserID);
-        let array = []
-        array.push(like)
+        let likedProfileID = req.body.likedProfileID;
+        let status = db.addlike(profileID, likedProfileID);
+        console.log(status)
+
         context.res = {
-            body: ["succes", array]
+            body: ["succes", profileID, likedProfileID]
         };
+    } catch(error) {
+        context.res = {
+            status: 400,
+            body: `${error.message}`
+        };
+    };
+};
+
+async function getLID(context, req){
+    try{
+        let profileID = req.body.profileID;
+        let likedProfileID = req.body.likedProfileID;
+        let likeID = await db.getLikeID(profileID, likedProfileID)
+        
+        console.log(likeID)
+        context.res = {
+            body: [likeID]
+        }
     } catch(error) {
         context.res = {
             status: 400,

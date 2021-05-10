@@ -169,7 +169,7 @@ function getPossibleLikes() {
 }
 
 //pressing likebutton on table will push them to like-array
-function likeUser(likedUserID) {
+function likeUser(likedProfileID) {
     let emailToken = localStorage.getItem('token');
 
     //henter først user_id
@@ -203,13 +203,30 @@ function likeUser(likedUserID) {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            likedUserID: likedUserID,
+                            likedProfileID: likedProfileID,
                             profileID: data[0]
                         })
                     }).then(res => res.json()).then(data => {
                         if (data[0] == 'succes') {
                             alert('Pretty one! \nLets hope you will be liked aswell.');
-                            console.log(data[1])
+
+                            fetch('http://localhost:7071/api/like', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    likedProfileID: data[2],
+                                    profileID: data[1]
+                                })
+                            }).then(res => res.json()).then(data => {
+                                let like = data
+                                console.log(like)
+                            })
+                                .catch((error) => {
+                                    console.error('Error:', error);
+                                });
+
                             /* potential match function
                             for (var i = 0; i < data[1].length; i++) {
                                 if (data[4] == data[1][i]) {
