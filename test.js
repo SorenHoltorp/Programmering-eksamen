@@ -2,32 +2,18 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
+let expect = require("chai").expect;
 
-//Test signup
-describe('POST /add', function () {
-    it('should sign up', function (done) {
-        let user = {
-            username: "chrissermednudler",
-            password: "1234",
-            email: "christester@live.dk"
-        };
-        chai.request("localhost:3003")
-            .post('/add')
-            .send(user)
-            .end(function (err, res) {
-                done();
-            })
+  
+  it('it should log in', function() {   // <= No done callback
+    chai.request('http://localhost:7071')
+    .post('/api/login')
+    .type("form")
+    .send({
+        email:"emil@emil.com",
+        password:"1234", 
+    })
+    .end(function(err, res) {
+      expect(res).to.have.status(123);    // <= Test completes before this runs
     });
-});
-
-
-describe('/GET user', () => {
-    it('it should Get all users', (done) => {
-        chai.request("localhost:3003")
-        .get('/get')
-        .end((err, res) => {
-            done();
-        });
-    });
-});
-
+  });
