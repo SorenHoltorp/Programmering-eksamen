@@ -1,3 +1,4 @@
+//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -6,6 +7,7 @@ function checkIfLoggedIn() {
     }
 };
 
+//Funktion som viderestiller til logout såfremt at bruger trykker logout. Den benytter localStorage til at fjerne ens token.
 function logout() {
     localStorage.removeItem('token');
     location.href = "login.html";

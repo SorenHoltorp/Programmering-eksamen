@@ -1,4 +1,4 @@
-//Validates if u are already logged in
+//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
 function checkIfLoggedIn() {
     if(localStorage.getItem('token')){
         location.href = "mainpage.html"
