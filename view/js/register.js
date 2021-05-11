@@ -8,6 +8,7 @@ function checkIfLoggedIn() {
     }
 }
 
+//Sender POST http til stien, som er connected til databasen
 var form = document.getElementById("register")
 
 form.addEventListener('submit', function (e) {
