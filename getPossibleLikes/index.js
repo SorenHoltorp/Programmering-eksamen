@@ -23,7 +23,6 @@ module.exports = async function (context, req) {
 //Get users ecxept itself
 async function getPossibleLikes(context, req){
     try{
-        //let emailToken = req.headers.authentication
         let profileID = req.body.profileID;
         let possibleLikes = await db.getPossibleLikes(profileID);
         context.res = {
