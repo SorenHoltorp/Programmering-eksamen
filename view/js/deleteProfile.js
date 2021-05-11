@@ -1,3 +1,4 @@
+// Logged In Function
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -8,6 +9,7 @@ function checkIfLoggedIn() {
 
 var form = document.getElementById('deleteProfile')
 
+// Eventlistener
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 

@@ -13,6 +13,7 @@ function logout() {
     alert("Bye, bye!");
 }
 
+//Eksporterer
 module.exports.logout = logout
 
 var form = document.getElementById("setupProfile")
@@ -20,6 +21,7 @@ var form = document.getElementById("setupProfile")
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
+    // Henter HTML informationer
     var name = document.getElementById("name").value
     var age = document.getElementById("age").value
     var gender = document.getElementById('gender').value

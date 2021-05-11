@@ -12,6 +12,7 @@ var form = document.getElementById("register")
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
+    // Henter HTML informationer
     var username = document.getElementById("username").value
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value

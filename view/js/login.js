@@ -14,6 +14,7 @@ var login = document.getElementById("login")
 login.addEventListener('submit', function(e) {
     e.preventDefault()
 
+    // Henter HTML Information
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
   

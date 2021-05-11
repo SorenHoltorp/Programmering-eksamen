@@ -1,3 +1,4 @@
+// Logged In Function
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -8,9 +9,11 @@ function checkIfLoggedIn() {
 
 var form = document.getElementById("setupProfileAdmin")
 
+// Eventlistener
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
+    // Henter HTML informationer
     var name = document.getElementById("name").value
     var age = document.getElementById("age").value
     var gender = document.getElementById('gender').value

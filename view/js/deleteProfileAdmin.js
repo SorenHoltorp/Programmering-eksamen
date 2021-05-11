@@ -1,3 +1,4 @@
+// Logged In Function
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -8,11 +9,12 @@ function checkIfLoggedIn() {
 
 var form = document.getElementById('deleteProfileAdmin')
 
+// Eventlistener
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
     var usersId = document.getElementById("usersId").value
-    
+    // DELETE Function
         fetch("http://localhost:7071/api/setupProfile", {
             method: 'DELETE',
             body: JSON.stringify({
