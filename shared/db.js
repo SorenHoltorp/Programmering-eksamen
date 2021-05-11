@@ -382,6 +382,7 @@ function getLikeID(profileID, likedProfileID) {
                         profileID: profileID,
                         likedProfileID: likedProfileID
                     }
+                    console.log(like)
                     resolve(like)
                 })
 
