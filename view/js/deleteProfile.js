@@ -24,6 +24,7 @@ form.addEventListener('submit', function (e) {
     response.json()).then((data) => {
         console.log('Getting ID was a succes. ID is: ' + data[0])
 
+        // dernæest kan man slette sin profile 
         fetch("http://localhost:7071/api/setupProfile", {
             method: 'DELETE',
             body: JSON.stringify({

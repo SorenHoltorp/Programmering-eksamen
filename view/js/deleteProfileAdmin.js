@@ -12,7 +12,8 @@ form.addEventListener('submit', function (e) {
     e.preventDefault()
 
     var usersId = document.getElementById("usersId").value
-    
+
+        // Her får admin mulighed for at slette en brugerprofil i databasen 
         fetch("http://localhost:7071/api/setupProfile", {
             method: 'DELETE',
             body: JSON.stringify({
