@@ -43,6 +43,7 @@ async function getid(context, req){
     };
 };
 
+// her tilføjer man likes i til databasen 
 async function patchLike(context, req){
     try{
         let profileID = req.body.profileID;
@@ -60,6 +61,7 @@ async function patchLike(context, req){
     };
 };
 
+// her skaffer man id på et like 
 async function getLID(context, req){
     try{
         let profileID = req.body.profileID;
