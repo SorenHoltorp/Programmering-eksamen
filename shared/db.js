@@ -52,6 +52,7 @@ function insert(payload) {
 }
 module.exports.insert = insert
 
+// Function til at target specifik user på dens ID.
 function selectProfile(users_id) {
     return new Promise((resolve, reject) => {
         const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id`;
@@ -83,6 +84,8 @@ function selectProfile(users_id) {
 
 module.exports.selectProfile = selectProfile
 
+
+// Function til at logge specifik user på email.
 function login(email) {
     return new Promise((resolve, reject) => {
 
@@ -169,7 +172,7 @@ function deleteProfile(payload) {
 }
 module.exports.deleteProfile = deleteProfile
 
-
+// Function til at hente specifik user på dens token som er koblet på mailen.
 function getUserID(emailToken) {
     console.log("getUserID function has been activated. Getting ID from database.")
 
@@ -194,7 +197,7 @@ function getUserID(emailToken) {
 }
 module.exports.getUserID = getUserID;
 
-
+// Function til at target specifik Profile på dens ID.
 function getProfileID(userID) {
     console.log("getProfileID function has been activated. Getting ID from database.")
 
@@ -220,6 +223,7 @@ function getProfileID(userID) {
 module.exports.getProfileID = getProfileID;
 
 
+// Function til at target specifik Profile på dens ID.
 function addLike(profileID, likedUserID) {
     return new Promise(async (resolve, reject) => {
         console.log("addLike function has been activated. Adding like to database.");
@@ -246,6 +250,7 @@ function addLike(profileID, likedUserID) {
 module.exports.addlike = addLike;
 
 
+// Function til at hente Profiler, som er givet like på dens ID.
 function getPossibleLikes(profileID) {
     return new Promise(async (resolve, reject) => {
         console.log("getPossibleLikes function has been activated. Getting likes from the database.");
