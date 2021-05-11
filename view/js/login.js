@@ -2,7 +2,7 @@
 function checkIfLoggedIn() {
     if(localStorage.getItem('token')){
         location.href = "mainpage.html"
-        alert('You are allready logged in. Press OK to continue.');
+        alert('You are already logged in. Press OK to continue.');
     } else {
         return;
     }
