@@ -16,7 +16,7 @@ describe('FIRST TEST - Login success', function () {
 
     }
     // 2. Act
-    chai.request('http://localhost:7071')
+    chai.request('http://localhost:5000')
     .post('/api/login')
     .send(user)
     .end(function(err, res) {
@@ -40,7 +40,7 @@ describe('SECOND TEST - Failed Login', function () {
 
     }
     // 2. Act
-    chai.request('http://localhost:7071')
+    chai.request('http://localhost:5000')
     .post('/api/login')
     .send(user)
     .end(function(err, res) {
