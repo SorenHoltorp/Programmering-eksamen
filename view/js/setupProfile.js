@@ -12,9 +12,6 @@ function logout() {
     location.href = "login.html";
     alert("Bye, bye!");
 }
-
-module.exports.logout = logout
-
 var form = document.getElementById("setupProfile")
 
 form.addEventListener('submit', function (e) {
