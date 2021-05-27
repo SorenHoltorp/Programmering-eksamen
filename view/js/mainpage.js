@@ -270,15 +270,6 @@ function likeUser(likedProfileID) {
                                     console.error('Error:', error);
                                 });
 
-                            /* potential match function
-                            for (var i = 0; i < data[1].length; i++) {
-                                if (data[4] == data[1][i]) {
-                                    //if match
-                                    alert('Congratz! You just matched with ' + data[2] + ' ' + data[3] + '. Click "See my matches" to see the profile.')
-                                    break;
-                                }
-                            }
-                            */
                         } else {
                             alert('Sorry, you cannot like persons at the moment. \nWe will fix the problem soon as possible.')
                         }

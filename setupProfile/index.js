@@ -45,7 +45,7 @@ async function getid(context, req){
     }
 }
 
-
+// her opretter eller opdaterer man sin profil 
 async function patch(context, req){
     try{
         let payload = req.body
@@ -62,6 +62,7 @@ async function patch(context, req){
     }
 }
 
+// her sletter man sin profil 
 async function remove(context, req){
     try{
         let payload = req.body
