@@ -27,9 +27,9 @@ module.exports = async function (context, req) {
 }
 
 
+// two-factor authentication
 
-// Her kalder man en login-funktion, der gør det muligt for en bruger 
-// at logge ind samt at give dem en jwt-token
+
 async function post(context, req){
     try{
 
@@ -58,4 +58,7 @@ async function post(context, req){
         context.res = {
             status: 400,
             body: error.message
-        }}}
+        }
+    }
+    
+}

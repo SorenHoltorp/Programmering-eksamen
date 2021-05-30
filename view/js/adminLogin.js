@@ -1,8 +1,8 @@
-//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
+// Logged In Function
 function checkIfLoggedIn() {
-    if(localStorage.getItem('token')){
-        location.href = "homepageAdmin.html"
-        alert('You are allready logged in. Press OK to continue.');
+    if(localStorage.getItem('token')){ // Henter Localstorage token
+        location.href = "homepageAdmin.html" // Rykker til admin html side
+        alert('You are already logged in. Press OK to continue.');
     } else {
         return;
     }

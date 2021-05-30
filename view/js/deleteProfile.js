@@ -1,4 +1,4 @@
-//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
+// Logged In Function
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -9,6 +9,7 @@ function checkIfLoggedIn() {
 
 var form = document.getElementById('deleteProfile')
 
+// Eventlistener
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
@@ -25,7 +26,6 @@ form.addEventListener('submit', function (e) {
     response.json()).then((data) => {
         console.log('Getting ID was a succes. ID is: ' + data[0])
 
-        // dernæest kan man slette sin profile 
         fetch("http://localhost:7071/api/setupProfile", {
             method: 'DELETE',
             body: JSON.stringify({

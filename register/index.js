@@ -24,7 +24,6 @@ module.exports = async function (context, req) {
     }
 }
 
-// her henter man sin user information
 async function get(context, req){
     try{
         let name = req.query.name;
@@ -40,7 +39,6 @@ async function get(context, req){
     }
 }
 
-// her indsætter man user information i databasen 
 async function post(context, req){
     try{
         let payload = req.body;

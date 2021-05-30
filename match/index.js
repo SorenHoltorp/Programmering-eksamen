@@ -43,7 +43,6 @@ async function compareLike(context, req) {
     };
 };
 
-// Her indsætter man et match til databasen 
 async function insertMatch(context, req) {
     try {
         let firstLikeID = req.body.firstLikeID

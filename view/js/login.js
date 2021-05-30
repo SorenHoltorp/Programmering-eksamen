@@ -1,4 +1,4 @@
-//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
+//Validates if u are already logged in
 function checkIfLoggedIn() {
     if(localStorage.getItem('token')){
         location.href = "mainpage.html"
@@ -14,6 +14,7 @@ var login = document.getElementById("login")
 login.addEventListener('submit', function(e) {
     e.preventDefault()
 
+    // Henter HTML Information
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
   

@@ -23,7 +23,6 @@ module.exports = async function (context, req) {
     }
 }
 
-// Her henter man sin profil information 
 async function getProfile(context, req){
     try{
         let userID = req.body.userID;

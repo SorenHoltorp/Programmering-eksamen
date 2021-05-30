@@ -1,4 +1,4 @@
-//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
+// Logged In Function
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -9,12 +9,12 @@ function checkIfLoggedIn() {
 
 var form = document.getElementById('deleteProfileAdmin')
 
+// Eventlistener
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
     var usersId = document.getElementById("usersId").value
-
-        // Her får admin mulighed for at slette en brugerprofil i databasen 
+    // DELETE Function
         fetch("http://localhost:7071/api/setupProfile", {
             method: 'DELETE',
             body: JSON.stringify({

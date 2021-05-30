@@ -1,4 +1,3 @@
-//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -13,11 +12,14 @@ function logout() {
     location.href = "login.html";
     alert("Bye, bye!");
 }
+
+
 var form = document.getElementById("setupProfile")
 
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
+    // Henter HTML informationer
     var name = document.getElementById("name").value
     var age = document.getElementById("age").value
     var gender = document.getElementById('gender').value

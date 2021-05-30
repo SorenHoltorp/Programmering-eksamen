@@ -7,8 +7,6 @@ const { request } = require('express');
 
 var connection = new Connection(config);
 
-// Denne funktion er til at starte databasen og skabe 
-// en connection mellem backenden og databasen 
 function startDb() {
     return new Promise((resolve, reject) => {
         connection.on('connect', (err) => {
@@ -30,7 +28,6 @@ module.exports.startDb = startDb
 // Funktion til at oprette bruger i databasen
 function insert(payload) {
     return new Promise((resolve, reject) => {
-        // her kalder man en SQL-query, der insætter data i databasen, når man opretter sin bruger 
         const sql = `INSERT INTO [datingapplication].[tbl_users] (username, email, password) VALUES (@username, @email, @password)`
         const request = new Request(sql, (err) => {
             if (err) {
@@ -55,7 +52,6 @@ function insert(payload) {
 }
 module.exports.insert = insert
 
-// Function til at target specifik user på dens ID.
 function selectProfile(users_id) {
     return new Promise((resolve, reject) => {
         const sql = `SELECT * FROM [datingapplication].[tbl_profile] WHERE users_id = @users_id`;
@@ -87,8 +83,6 @@ function selectProfile(users_id) {
 
 module.exports.selectProfile = selectProfile
 
-
-// Function til at logge specifik user på email.
 function login(email) {
     return new Promise((resolve, reject) => {
 
@@ -103,6 +97,8 @@ function login(email) {
         });
 
         request.addParameter('email', TYPES.VarChar, email)
+
+        //bcrypt.compareSync(password, hash); // true
 
         request.on('row', (colomns) => {
             resolve(colomns)
@@ -173,7 +169,7 @@ function deleteProfile(payload) {
 }
 module.exports.deleteProfile = deleteProfile
 
-// Function til at hente specifik user på dens token som er koblet på mailen.
+
 function getUserID(emailToken) {
     console.log("getUserID function has been activated. Getting ID from database.")
 
@@ -198,7 +194,7 @@ function getUserID(emailToken) {
 }
 module.exports.getUserID = getUserID;
 
-// Function til at target specifik Profile på dens ID.
+
 function getProfileID(userID) {
     console.log("getProfileID function has been activated. Getting ID from database.")
 
@@ -224,7 +220,6 @@ function getProfileID(userID) {
 module.exports.getProfileID = getProfileID;
 
 
-// Function til at target specifik Profile på dens ID.
 function addLike(profileID, likedUserID) {
     return new Promise(async (resolve, reject) => {
         console.log("addLike function has been activated. Adding like to database.");
@@ -251,7 +246,6 @@ function addLike(profileID, likedUserID) {
 module.exports.addlike = addLike;
 
 
-// Function til at hente Profiler, som er givet like på dens ID.
 function getPossibleLikes(profileID) {
     return new Promise(async (resolve, reject) => {
         console.log("getPossibleLikes function has been activated. Getting likes from the database.");
@@ -294,8 +288,7 @@ function getPossibleLikes(profileID) {
 }
 module.exports.getPossibleLikes = getPossibleLikes;
 
-// Denne funktion bruges til at logge ind med en admin profil, da den kun tager 
-// udgangspunkt i den specifikke email, der tilhører systemets ene admin 
+
 function adminLogin(email) {
     return new Promise((resolve, reject) => {
 
@@ -355,7 +348,6 @@ function getUsersAdmin(userID) {
 }
 module.exports.getUsersAdmin = getUsersAdmin;
 
-// Her får man id på et like, der senere bruges til at lave et match 
 function getLikeID(profileID, likedProfileID) {
     try {
         //Prøvede at lave connection.state.name om til loggedIn for at undgå fejl. Men dette laver blot en ny fejl.
@@ -390,7 +382,6 @@ function getLikeID(profileID, likedProfileID) {
                         profileID: profileID,
                         likedProfileID: likedProfileID
                     }
-                    console.log(like)
                     resolve(like)
                 })
 
@@ -403,7 +394,6 @@ function getLikeID(profileID, likedProfileID) {
 }
 module.exports.getLikeID = getLikeID;
 
-// denne funktion bruges til at sammenligne likes, der gør det muligt at kunne lave et match 
 function comparingLikes(profileID, likedUserID, likeID) {
     return new Promise(async (resolve, reject) => {
         console.log("comparingLikes function has been activated. Comparing likes in the database.");
@@ -446,7 +436,6 @@ function comparingLikes(profileID, likedUserID, likeID) {
 }
 module.exports.comparingLikes = comparingLikes;
 
-// her bliver det gjort muligt at indsætte et match i databasen 
 function insertMatch(firstLikeID, secondLikeID) {
     return new Promise(async (resolve, reject) => {
         console.log("insertMatch function has been activated. Adding match to database.");

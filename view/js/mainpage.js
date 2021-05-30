@@ -1,4 +1,4 @@
-//Denne funktion checker om User bærer en token i sin header, hvis det ikke er tilfældet bliver de viderestillet til login
+//returns to index if no token
 function checkIfLoggedIn() {
     if (localStorage.getItem('token')) {
         return;
@@ -7,7 +7,7 @@ function checkIfLoggedIn() {
     }
 };
 
-//Funktion som viderestiller til logout såfremt at bruger trykker logout. Den benytter localStorage til at fjerne ens token.
+//returns to base if no token
 function logout() {
     localStorage.removeItem('token');
     location.href = "login.html";
@@ -270,6 +270,15 @@ function likeUser(likedProfileID) {
                                     console.error('Error:', error);
                                 });
 
+                            /* potential match function
+                            for (var i = 0; i < data[1].length; i++) {
+                                if (data[4] == data[1][i]) {
+                                    //if match
+                                    alert('Congratz! You just matched with ' + data[2] + ' ' + data[3] + '. Click "See my matches" to see the profile.')
+                                    break;
+                                }
+                            }
+                            */
                         } else {
                             alert('Sorry, you cannot like persons at the moment. \nWe will fix the problem soon as possible.')
                         }
