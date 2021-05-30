@@ -13,8 +13,6 @@ function logout() {
     alert("Bye, bye!");
 }
 
-//Eksporterer
-module.exports.logout = logout
 
 var form = document.getElementById("setupProfile")
 
