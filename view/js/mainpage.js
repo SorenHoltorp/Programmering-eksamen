@@ -222,7 +222,7 @@ function likeUser(likedProfileID) {
                             }).then(res => res.json()).then(data => {
                                 let like = data[0]
                                 console.log("Like just added to database: " + like)
-
+//Match
                                 fetch('http://localhost:7071/api/match', {
                                     method: 'POST',
                                     headers: {
