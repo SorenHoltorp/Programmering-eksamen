@@ -222,7 +222,7 @@ function likeUser(likedProfileID) {
                             }).then(res => res.json()).then(data => {
                                 let like = data[0]
                                 console.log("Like just added to database: " + like)
-//Match
+
                                 fetch('http://localhost:7071/api/match', {
                                     method: 'POST',
                                     headers: {
@@ -237,14 +237,18 @@ function likeUser(likedProfileID) {
                                     console.log(data)
                                     if (data[0].status == "yes") {
 
+                                        console.log(data[0].status)
+                                        console.log(data[0].firstLikeID)
+                                        console.log(data[0].secondLikeID)
+
                                         fetch('http://localhost:7071/api/match', {
                                             method: 'PATCH',
                                             headers: {
                                                 'Content-Type': 'application/json'
                                             },
                                             body: JSON.stringify({
-                                                likeID1: data[0].firstLikeID,
-                                                likeID2: data[0].secondLikeID
+                                                firstLikeID: data[0].firstLikeID,
+                                                secondLikeID: data[0].secondLikeID
                                             })
                                         }).then(res => res.json()).then(data => {
                                             console.log(data)
