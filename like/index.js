@@ -4,7 +4,7 @@ const db = require('../shared/db');
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.')
     try {
-        await db.startDb(); //start db connection
+       await  db.startDb(); //start db connection
     } catch (error) {
         console.log("Error connecting to the database", error.message)
     }
@@ -66,9 +66,12 @@ async function getLID(context, req){
         let likedProfileID = req.body.likedProfileID;
         let likeID = await db.getLikeID(profileID, likedProfileID)
         
-        console.log(likeID)
+        console.log("Like ID: " + likeID)
         context.res = {
-            body: [likeID]
+            body: [
+                likeID.likeID,
+                profileID,
+                likedProfileID]
         }
     } catch(error) {
         context.res = {

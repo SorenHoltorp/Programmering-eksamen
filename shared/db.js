@@ -9,6 +9,13 @@ var connection = new Connection(config);
 
 function startDb() {
     return new Promise((resolve, reject) => {
+
+        console.log("\n***************** STARTING DB ******************")
+        //HER LØSES FEJLEN. Connection var opbrugt, så en connection skal lukkes, før at en ny kan tages i brug.
+        connection.close();
+        connection = new Connection(config);
+       // connection.reset();
+
         connection.on('connect', (err) => {
             if (err) {
                 console.log('Connection failed')
@@ -19,7 +26,10 @@ function startDb() {
                 resolve();
             }
         })
+
         connection.connect();
+
+        console.log("***************** DB STARTED ******************\n")
     })
 }
 module.exports.sqlConnection = connection
@@ -349,48 +359,56 @@ function getUsersAdmin(userID) {
 module.exports.getUsersAdmin = getUsersAdmin;
 
 function getLikeID(profileID, likedProfileID) {
-    try {
+
+    console.log("Profile: " + profileID)
+    console.log("likedProfile: " + likedProfileID)
+
+    console.log("getLikeID function has been activated. Getting ID from database.")
+
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @profile_id AND likedProfile_id = @likedProfile_id`;
+        const request = new Request(sql, (err, rowcount) => {
+            if (err) {
+                reject(err)
+                console.log(err)
+            } else if (rowcount == 0) {
+                reject({ message: 'Like does not exits' })
+            }
+        })
+
+        request.addParameter('profile_id', TYPES.Int, profileID)
+        request.addParameter('likedProfile_id', TYPES.Int, likedProfileID)
+
+        console.log("consoling connectionstate:")
+        console.log("connections.state.name is now: " + connection.state.name)
+
+        request.on('row', (colomns) => {
+
+            let like = {
+                likeID: colomns[0].value,
+                profileID: colomns[1].value,
+                likedProfileID: colomns[2].value
+            }
+            console.log("Like: " +like)
+            resolve(like)
+        })
+
+        connection.execSql(request)
+    })
+
+    /*try {
         //Prøvede at lave connection.state.name om til loggedIn for at undgå fejl. Men dette laver blot en ny fejl.
         if (connection.state.name !== "LoggedIn") {
-            setTimeout(getLikeID, 0);
+            //setTimeout(getLikeID(profileID, likedProfileID), 0);
             console.log("connections.state.name was just changed from: " + connection.state.name)
         } else {
 
-            console.log("getLikeID function has been activated. Getting ID from database.")
 
-            return new Promise((resolve, reject) => {
-                const sql = `SELECT * FROM [datingapplication].[tbl_likes] WHERE profile_id = @profile_id AND likedProfile_id = @likedProfile_id`;
-                const request = new Request(sql, (err, rowcount) => {
-                    if (err) {
-                        reject(err)
-                        console.log(err)
-                    } else if (rowcount == 0) {
-                        reject({ message: 'Like does not exits' })
-                    }
-                })
-
-                request.addParameter('profile_id', TYPES.Int, profileID)
-                request.addParameter('likedProfile_id', TYPES.Int, likedProfileID)
-
-                console.log("consoling connectionstate:")
-                console.log("connections.state.name is now: " + connection.state.name)
-
-                request.on('row', (colomns) => {
-
-                    let like = {
-                        likeID: colomns[0].value,
-                        profileID: profileID,
-                        likedProfileID: likedProfileID
-                    }
-                    resolve(like)
-                })
-
-                connection.execSql(request)
-            })
         }
     } catch (err) {
         throw (err)
     }
+    */
 }
 module.exports.getLikeID = getLikeID;
 
@@ -411,6 +429,8 @@ function comparingLikes(profileID, likedUserID, likeID) {
                 console.log(err)
             }
         });
+
+
         request.addParameter('profile_id', TYPES.Int, profileID);
         request.addParameter('likedProfile_id', TYPES.Int, likedUserID);
         request.addParameter('like_id', TYPES.Int, likeID);
@@ -437,31 +457,38 @@ function comparingLikes(profileID, likedUserID, likeID) {
 module.exports.comparingLikes = comparingLikes;
 
 function insertMatch(firstLikeID, secondLikeID) {
-    return new Promise(async (resolve, reject) => {
+    const promise = new Promise(async (resolve, reject) => {
         console.log("insertMatch function has been activated. Adding match to database.");
 
         const sql = `IF NOT EXISTS (SELECT * FROM [datingapplication].[tbl_matches] WHERE like_id1 = @like_id1 AND like_id2 = @like_id2)
         BEGIN
         INSERT INTO [datingapplication].[tbl_matches] (like_id1, like_id2) VALUES (@like_id1, @like_id2)
-        END`
-        console.log("i was here")
+        END
+        SELECT * FROM [datingapplication].[tbl_matches] WHERE like_id1 = @like_id1 AND like_id2 = @like_id2`
+
         const request = new Request(sql, (err) => {
             if (err) {
                 reject(err)
                 console.log(err)
             }
         });
-        console.log("i was heree")
+
+        console.log("OUR DATA!")
+        console.log(firstLikeID)
+        console.log(secondLikeID)
+
         request.addParameter('like_id1', TYPES.Int, firstLikeID);
         request.addParameter('like_id2', TYPES.Int, secondLikeID);
 
         request.on("row", (columns) => {
-            console.log("i was hereeee")
-            console.log(columns[0].value)
-            let match = "hell ya"
+            console.log("match id is: " + columns[0].value)
+            let match = columns[0].value
             resolve(match)
         });
         connection.execSql(request)
-    });
+
+    })
+
+    return promise;
 }
 module.exports.insertMatch = insertMatch;
