@@ -31,7 +31,7 @@ function getProfileInformation() {
             console.log("getting user_id was a succes. id is: " + data[0])
             let userID = data[0];
 
-
+// Henter profile id
             fetch('http://localhost:7071/api/homePage', {
                 method: 'PUT',
                 headers: {
@@ -68,7 +68,7 @@ function getProfileInformation() {
                         university.innerHTML = informationArray[i].university;
                     }
                 } else {
-                    alert('Please add profile information')
+                        location.href = "setupProfile.html"; 
                 }
             })
                 .catch((err) => {
